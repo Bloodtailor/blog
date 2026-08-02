@@ -1,0 +1,103 @@
+---
+id: "AO-003"
+title: "The one-shot game that worked, and the one that didn't"
+summary: "A skateboarding wizard in Venice Beach, built in a single prompt in one evening. Then I tried the same trick on something bigger and it fell apart — which is the actually useful part."
+date: 2026-08-02
+status: "shipped"
+tags: ["claude-code", "three-js", "gamedev", "elevenlabs", "lessons"]
+---
+
+I was messing around with Sora, trying to find prompts that produced something interesting,
+and I asked it for a skateboarding wizard in Venice Beach casting fireballs at homeless
+people.
+
+It did a great job. And the image stuck with me for weeks — it just looked *fun*. So
+eventually I built the game.
+
+You can [play it here](/games/grind-and-grimoire/). It's about fifteen minutes. Keyboard and
+mouse, sorry.
+
+## What it is
+
+You're Kai, a skateboarding wizard with a 2 AM open-mic slot and no poem written. You have
+until then to skate Venice and Santa Monica, collect twelve pieces of inspiration, and
+survive the boardwalk.
+
+Grind on anything with an edge — curbs, cars, benches, string lights strung between
+buildings, the VENICE sign. Fireball the fiends. Refill your mana at food shops, because
+that's the only place it refills. Buy drip with the cash the fiends drop, and then every
+piece of clothing earns you exactly one unique compliment from a stranger on the street,
+which raises your EGO, which maxes your stats and makes your fireballs bigger.
+
+Kai hates this. He says so.
+
+That last mechanic is lifted, with affection, from
+[**Bum Bag Bangin'** by SeaDads](https://seadads.itch.io/bum-bag-bangin) — a Ludum Dare 40
+game I've loved for years, where you're a guy walking to work in a genuinely excellent bum
+bag and the compliments are the *hazard*. Too many and your head swells. I inverted it:
+here the compliments buff you, and the joke is that your wizard resents being helped by
+them.
+
+Everything you see is procedural. No downloaded models, no textures, no asset packs — every
+building, sign, and facade is painted to a canvas at runtime. All 76 audio assets (51 voice
+lines, 22 sound effects, 3 music tracks) came out of the ElevenLabs API.
+
+## The prompt was the whole thing
+
+I've seen people describe one-shot game generation as a kind of magic trick. It isn't. The
+result was good because the prompt was long and specific, and for no other reason.
+
+I didn't ask for "a skateboarding game." I named every mechanic. Skating, grinding on rails
+and sidewalks and cars, wall-jumping off buildings. I specified the restaurants you could go
+into — and I specified **the joke that happens at each one**. I specified the clothing shops,
+and the compliment loop, and that the character should comment on his own ego inflating.
+
+Then Fable 5 wrote the actual lines, and this is the part I didn't expect: it is genuinely
+funny. The voice lines land. The shop scenes land. I gave it the shape of every joke and it
+filled them in better than I would have.
+
+I don't think that contradicts what I found building [BLACKWATER](/posts/blackwater-weekend/) —
+that the model resists creative writing. It's the same finding with the constraint changed.
+Here every piece of writing was small, bounded, and pinned to a mechanic I'd already
+specified. That's not a long-horizon creative task. That's filling in a form, and it's
+excellent at filling in forms.
+
+## Then I got greedy
+
+I was so happy with how this came out that I immediately tried the same move on something
+bigger. One prompt, maximum reasoning, a much more ambitious game.
+
+It was terrible. Not disappointing — terrible.
+
+Nothing about the technique had changed. I'd just made the target too big for one pass to
+hold, and the whole thing degraded at once: mechanics half-implemented, systems that didn't
+talk to each other, the specificity I'd written getting flattened into mush.
+
+That failure is what sent me down the road that became BLACKWATER — built iteratively, with
+developer tools and tests requested *first*, so I could see and fix what the model couldn't.
+Those are the same project in a sense. This one is the control group.
+
+## The size rule
+
+So here's the thing I'd tell anyone trying this.
+
+**One-shot generation works, and the constraint is scope, not ambition.** If you want a
+genuinely good game out of a single prompt, it has to be about this big — roughly a
+fifteen-minute experience, a handful of interlocking systems, one joke per location. At that
+size you can be specific about everything, and specificity is the whole input.
+
+Go bigger and you don't get a bigger version of this. You get slop. Bigger needs iteration,
+tooling, and your own eyes on it.
+
+Also: give it the ElevenLabs API. That's not scope-dependent. That's just always right.
+
+## Why I keep doing this
+
+Honestly, mostly because it's fun, and because there's something specific and good about
+watching an idea you've been carrying around turn into a thing you can actually load and
+play.
+
+This one took an evening. About four and a half hours from the first file to the last,
+which is longer than the hour I remembered and still absurdly short for what came out.
+
+I'd like to do more at this size.
