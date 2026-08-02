@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+
+// The showcase. Add a finished mini project by adding one entry here.
+//   href      — internal path (vendored into public/games/) or an external URL
+//   external  — true opens in a new tab; use for games on their own subdomain
+//   post      — slug of the write-up in the ledger, if there is one
+const projects = [
+  {
+    name: 'Grind & Grimoire',
+    tagline: 'a Venice Beach wizard story',
+    blurb:
+      'Skate Venice Beach as a wizard with a 2 AM open-mic slot and no poem. Grind every ledge, ' +
+      'fireball the boardwalk fiends, buy drip until strangers compliment you against your will. ' +
+      'One prompt, one evening, entirely procedural — no downloaded assets.',
+    href: '/games/grind-and-grimoire/',
+    external: false,
+    year: 2026,
+    status: 'finished',
+    tags: ['Three.js', 'one-shot', 'ElevenLabs'],
+    post: null,
+  },
+  {
+    name: 'BLACKWATER',
+    tagline: 'round-based zombies, forty fathoms down',
+    blurb:
+      'Black Ops zombies rebuilt underwater, in a flooded 1968 dive site where air is the only ' +
+      'clock that matters. Ships with the level editor and tuning panel I built to fix what the ' +
+      'model could not see.',
+    href: 'https://play.aaronorelup.com',
+    external: true,
+    year: 2026,
+    status: 'proof of concept',
+    tags: ['Three.js', 'iterative', 'ElevenLabs'],
+    post: null,
+  },
+];
+---
+
+<Base
+  title="Projects — Aaron Orelup"
+  description="Finished mini projects — small games and experiments, playable in the browser."
+>
+  <p class="intro">
+    Small things I finished. Mostly games, mostly built to learn something specific. Each one is
+    playable in the browser &mdash; <strong>keyboard and mouse required</strong>, none of them work
+    on a phone.
+  </p>
+
+  <div class="ledger">
+    {projects.map((p) => (
+      <a
+        class="ledger-row"
+        href={p.href}
+        target={p.external ? '_blank' : undefined}
+        rel={p.external ? 'noopener noreferrer' : undefined}
+      >
+        <div class="ledger-meta">
+          <span class="id">{p.year}</span>
+          {p.status}
+        </div>
+        <div>
+          <h2 class="ledger-title">
+            {p.name}
+            {p.external && <span class="ext" aria-label="opens in a new tab">&#8599;</span>}
+          </h2>
+          <p class="proj-tagline">{p.tagline}</p>
+          <p class="ledger-summary">{p.blurb}</p>
+          <p class="proj-tags">
+            {p.tags.map((t) => <span class="tag">{t}</span>)}
+          </p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .intro {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-ink-soft);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .proj-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    margin: 0.15rem 0 0.5rem;
+  }
+
+  .proj-tags {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-ink-soft);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: 0.1rem 0.4rem;
+  }
+
+  .ext {
+    font-size: 0.7em;
+    color: var(--color-ink-soft);
+    margin-left: 0.3rem;
+  }
+</style>
