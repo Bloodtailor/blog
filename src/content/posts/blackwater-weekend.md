@@ -23,6 +23,10 @@ for me too. And if it's hard, that means there's something in there worth learni
 
 It was hard. Here's what was in there.
 
+[Play it here](https://play.aaronorelup.com). Keyboard and mouse only. The level editor I
+spend half this post talking about ships with it, behind the DEVELOPER TOOLS door on the
+title screen — if you're a developer, that's probably the more interesting half.
+
 ## Fable 5 does not want to do creative work
 
 I front-loaded the whole thing with planning. Design doc, then a full lore bible, before a
@@ -161,7 +165,8 @@ I'm not pretending otherwise.
 
 But it's a proof of concept I built in a weekend — 58 commits across four days — it brings
 an idea I'd been carrying for years into something I can actually load and play, and I
-learned more from it than from anything else I've built this month.
+learned more from it than from anything else I've built this month. It's up at
+[play.aaronorelup.com](https://play.aaronorelup.com) if you want to go down there.
 
 I'm proud of it. I'll come back and play it every so often, for no reason other than that
 I like it.
