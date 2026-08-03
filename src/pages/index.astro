@@ -1,33 +1,696 @@
 ---
-import Base from '../layouts/Base.astro';
+import Home from '../layouts/Home.astro';
 import { getCollection } from 'astro:content';
 
+// Real posts, newest first. Never hardcode these — the section stays correct
+// on its own as the ledger grows.
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
-const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const recent = allPosts
+  .sort(
+    (a, b) =>
+      b.data.date.valueOf() - a.data.date.valueOf() || b.data.id.localeCompare(a.data.id), // same-day posts: newest id first
+  )
+  .slice(0, 3);
 
-const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+const isoDate = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+const projects = [
+  {
+    name: 'BLACKWATER',
+    href: 'https://play.aaronorelup.com',
+    external: true,
+    kind: 'GAME',
+    tech: 'THREE.JS',
+    blurb:
+      "Black Ops zombies rebuilt underwater in a flooded 1968 dive site. Ships with the level editor and tuning tools I built to fix what the model couldn't see.",
+    cta: 'PLAY.AARONORELUP.COM',
+    stripe: '#626C82',
+    stripeAlt: '#5A6379',
+  },
+  {
+    name: 'Grind & Grimoire',
+    href: '/games/grind-and-grimoire/',
+    external: false,
+    kind: 'GAME',
+    tech: 'PROCEDURAL',
+    blurb:
+      'A skateboarding wizard in Venice Beach with a 2 AM open-mic slot and no poem written. Built from a single prompt in one evening, entirely procedural.',
+    cta: '/GAMES/GRIND-AND-GRIMOIRE/',
+    stripe: '#A89F5E',
+    stripeAlt: '#9A9155',
+  },
+  {
+    name: 'OpenClaw',
+    href: null,
+    external: false,
+    kind: 'TOOL',
+    tech: 'PYTHON',
+    blurb:
+      'An AI agent framework running on local Ollama embeddings, with memory consolidation and scheduled proactive behavior.',
+    cta: 'BUILDING',
+    stripe: '#BB784E',
+    stripeAlt: '#AC6D45',
+  },
+];
+
+const socials = [
+  { label: 'GITHUB', href: 'https://github.com/Bloodtailor' },
+  { label: 'DEV.TO', href: 'https://dev.to/aaron_orelup' },
+  { label: 'BLUESKY', href: 'https://bsky.app/profile/aaronorelup.bsky.social' },
+  { label: 'X', href: 'https://x.com/AaronOrelup' },
+  { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/aaron-orelup' },
+];
 ---
-<Base title="Aaron Orelup">
-  <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-ink-soft); margin-top: 1.5rem;">
-    A running ledger of what I'm learning about AI &mdash; agents, automation, and whatever
-    breaks along the way.
-  </p>
 
-  <div class="ledger">
-    {posts.length === 0 && (
-      <p class="empty-ledger">No entries filed yet. First one's coming.</p>
-    )}
-    {posts.map((post) => (
-      <a class="ledger-row" href={`/posts/${post.slug}/`}>
-        <div class="ledger-meta">
-          <span class="id">{post.data.id}</span>
-          {dateFmt.format(post.data.date)}
-        </div>
-        <div>
-          <h2 class="ledger-title">{post.data.title}</h2>
-          <p class="ledger-summary">{post.data.summary}</p>
-        </div>
+<Home title="Aaron Orelup">
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <a class="brand" href="/">
+        <span class="brand-badge"><img src="/chibi.webp" alt="" width="30" height="30" /></span>
+        AARONORELUP.COM
       </a>
-    ))}
-  </div>
-</Base>
+      <nav class="bar-nav">
+        <a href="/projects">PROJECTS</a>
+        <a href="/ledger">LEDGER</a>
+        <a href="#about">ABOUT</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">BASTROP, TEXAS · DATA &amp; SYSTEMS</p>
+          <h1><span class="drop">A</span>aron<br /><span class="drop">O</span>relup</h1>
+          <p class="lede">
+            Data and systems by trade. I build with AI agents to find out where they break — and
+            write down every one.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-solid" href="/projects">SEE THE PROJECTS</a>
+            <a class="btn btn-ghost" href="/ledger">READ THE LEDGER</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="bob">
+            <div class="disc">
+              <img
+                src="/chibi.webp"
+                alt="Illustrated character in a green kimono holding a cup of tea"
+                width="380"
+                height="630"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="wrap about-grid">
+        <div class="card-flat">
+          <p class="tag">WORK</p>
+          <p class="prose">
+            SQL Server, Power Query, Python, Excel automation, reporting pipelines. Information
+            Systems at Cal State Fullerton. Based in Bastrop, Texas.
+          </p>
+        </div>
+        <div class="card-flat">
+          <p class="tag">THE ACTUAL HOBBY</p>
+          <p class="prose">
+            Building things with AI agents to find out where they break. Small projects shipped
+            fast — mostly games and tools — and a written record of what each one taught me.
+          </p>
+        </div>
+        <div class="card-flat">
+          <p class="tag">OFF THE CLOCK</p>
+          <p class="prose">
+            Japanese, around JLPT N4, aiming at the JET Program. Fingerstyle guitar. Toastmasters,
+            on the humor pathway.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Featured projects</h2>
+          <a class="more" href="/projects">ALL PROJECTS <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="project-grid">
+          {
+            projects.map((p) =>
+              p.href ? (
+                <a
+                  class="project"
+                  href={p.href}
+                  target={p.external ? '_blank' : undefined}
+                  rel={p.external ? 'noopener noreferrer' : undefined}
+                >
+                  <span
+                    class="project-band"
+                    style={`background: repeating-linear-gradient(135deg, ${p.stripe} 0 12px, ${p.stripeAlt} 12px 24px);`}
+                  />
+                  <span class="project-meta">
+                    <span>{p.kind}</span>
+                    <span>{p.tech}</span>
+                  </span>
+                  <span class="project-body">
+                    <span class="project-name">{p.name}</span>
+                    <span class="prose">{p.blurb}</span>
+                    <span class="project-cta">
+                      {p.cta} <span aria-hidden="true">→</span>
+                    </span>
+                  </span>
+                </a>
+              ) : (
+                <div class="project project-static">
+                  <span
+                    class="project-band"
+                    style={`background: repeating-linear-gradient(135deg, ${p.stripe} 0 12px, ${p.stripeAlt} 12px 24px);`}
+                  />
+                  <span class="project-meta">
+                    <span>{p.kind}</span>
+                    <span>{p.tech}</span>
+                  </span>
+                  <span class="project-body">
+                    <span class="project-name">{p.name}</span>
+                    <span class="prose">{p.blurb}</span>
+                    <span class="project-cta">{p.cta}</span>
+                  </span>
+                </div>
+              )
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="ledger">
+      <div class="wrap ledger-grid">
+        <div>
+          <p class="tag tag-link">THE LEDGER · /LEDGER</p>
+          <h2 class="ledger-title">Where the writing lives</h2>
+          <p class="prose ledger-blurb">
+            Quieter pages, same paper, same gold. What I asked for, where the agent broke, what I'd
+            do differently.
+          </p>
+          <a class="more" href="/ledger">READ THE LEDGER <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="entries">
+          {
+            recent.map((post) => (
+              <a class="entry" href={`/posts/${post.slug}/`}>
+                <span class="entry-meta">
+                  {isoDate.format(post.data.date)} · {post.data.id}
+                </span>
+                <span class="entry-title">{post.data.title}</span>
+              </a>
+            ))
+          }
+          {recent.length === 0 && <p class="prose">No entries filed yet.</p>}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <nav class="foot-nav">
+        {
+          socials.map((s) => (
+            <a href={s.href} target="_blank" rel="me noopener noreferrer">
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+      <span class="copy">© {new Date().getFullYear()} AARON ORELUP</span>
+    </div>
+  </footer>
+</Home>
+
+<style>
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar {
+    background: var(--wood);
+    border-bottom: 3px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .bar-inner {
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--paper);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    transition: transform 240ms var(--spring);
+  }
+  .brand:hover {
+    transform: translateX(3px);
+    color: var(--paper);
+  }
+  .brand-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--pink);
+    border: 2px solid var(--ink);
+    display: block;
+    overflow: hidden;
+    flex: none;
+  }
+  .brand-badge img {
+    width: 170%;
+    height: 170%;
+    margin: -4% 0 0 -35%;
+    object-fit: contain;
+    display: block;
+  }
+  .bar-nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .bar-nav a {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+    padding: 9px 13px;
+    border-radius: 3px;
+    transition:
+      background 220ms ease,
+      color 220ms ease,
+      transform 240ms var(--spring);
+  }
+  .bar-nav a:hover {
+    background: var(--gold);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    border-bottom: 3px solid var(--ink);
+    background: var(--ink);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 3px;
+    background: var(--ink);
+  }
+  .hero-copy {
+    background: var(--pink);
+    padding: 56px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    margin: 0;
+  }
+  h1 {
+    font-family: 'Delius Unicase', cursive;
+    font-weight: 700;
+    font-size: clamp(44px, 5.6vw, 68px);
+    line-height: 1.12;
+    color: var(--ink);
+    margin: 0;
+  }
+  .drop {
+    font-size: 1.34em;
+    line-height: 0.8;
+  }
+  .lede {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 32ch;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .btn {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    border-radius: 3px;
+    box-shadow: 0 0 0 var(--deep-wood);
+    transition:
+      transform 240ms var(--spring),
+      box-shadow 240ms var(--spring),
+      background 220ms ease;
+  }
+  .btn-solid {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+  }
+  .btn-ghost {
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 12px 20px;
+    background: transparent;
+  }
+  .btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 5px 5px 0 var(--deep-wood);
+  }
+  .btn-solid:hover {
+    color: var(--paper);
+  }
+  .btn-ghost:hover {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 0 0 0 var(--deep-wood);
+  }
+
+  .hero-art {
+    background:
+      repeating-linear-gradient(transparent 0 46px, var(--ink) 46px 49px),
+      repeating-linear-gradient(90deg, transparent 0 46px, var(--ink) 46px 49px),
+      var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 24px;
+    overflow: hidden;
+  }
+  .bob {
+    position: relative;
+    width: min(300px, 72vw);
+    aspect-ratio: 1;
+    animation: bob 7s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-6px) rotate(-0.6deg);
+    }
+  }
+  .disc {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 4px solid var(--ink);
+    background:
+      radial-gradient(#e79aaa 2.6px, transparent 2.7px) 0 0 / 22px 22px,
+      var(--pink);
+    box-shadow: 0 8px 0 #4a4a5026;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transition:
+      transform 420ms var(--spring),
+      box-shadow 420ms var(--spring);
+  }
+  .disc:hover {
+    transform: translateY(-8px) rotate(-2deg) scale(1.035);
+    box-shadow: 0 20px 0 #4a4a501f;
+  }
+  .disc img {
+    width: 84%;
+    height: 94%;
+    object-fit: contain;
+    object-position: bottom;
+    display: block;
+    margin-bottom: -3%;
+  }
+
+  /* ---------- about ---------- */
+  .about {
+    background: var(--ink);
+    border-bottom: 3px solid var(--ink);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 3px;
+  }
+  .card-flat {
+    background: var(--paper);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: inset 0 0 0 var(--gold);
+    transition:
+      background 280ms ease,
+      box-shadow 320ms cubic-bezier(0.2, 0.8, 0.25, 1);
+  }
+  .card-flat:hover {
+    background: #fdf8f0;
+    box-shadow: inset 0 -5px 0 var(--gold);
+  }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #7c6f33;
+    margin: 0;
+  }
+  .tag-link {
+    color: var(--link);
+  }
+  .prose {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* ---------- projects ---------- */
+  .projects {
+    background: var(--paper);
+    padding: 56px 24px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .section-head h2 {
+    font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    margin: 0;
+  }
+  .more {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--link);
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    transition:
+      color 200ms ease,
+      gap 260ms var(--spring);
+  }
+  .more:hover {
+    color: var(--ink);
+    gap: 16px;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 22px;
+  }
+  .project {
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 0 0 #4a4a5033;
+    transition:
+      transform 280ms var(--spring),
+      box-shadow 280ms var(--spring);
+  }
+  a.project:hover {
+    transform: translate(-4px, -7px) rotate(-0.35deg);
+    box-shadow: 9px 11px 0 #4a4a5033;
+    color: var(--ink);
+  }
+  a.project:active {
+    transform: translate(0, -2px) rotate(0deg);
+    box-shadow: 3px 4px 0 #4a4a5033;
+  }
+  .project-band {
+    height: 150px;
+    border-bottom: 2px solid var(--ink);
+    display: block;
+  }
+  .project-meta {
+    background: var(--gold);
+    border-bottom: 1px solid var(--wood);
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .project-body {
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .project-name {
+    font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: #a8620a;
+  }
+  .project-cta {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #24544a;
+    margin-top: auto;
+  }
+
+  /* ---------- ledger ---------- */
+  .ledger {
+    background: #f2efe6;
+    border-top: 3px solid var(--ink);
+    padding: 56px 24px;
+  }
+  .ledger-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    align-items: start;
+  }
+  .ledger-title {
+    font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #211f1a;
+    margin: 6px 0 12px;
+  }
+  .ledger-blurb {
+    color: #5b564a;
+    max-width: 46ch;
+    margin-bottom: 14px;
+  }
+  .entries {
+    display: flex;
+    flex-direction: column;
+  }
+  .entry {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    padding: 14px 12px;
+    border-top: 1px solid #d8d2bf;
+    color: #211f1a;
+    box-shadow: inset 0 0 0 var(--link);
+    transition:
+      background 240ms ease,
+      transform 260ms var(--spring),
+      box-shadow 260ms ease;
+  }
+  .entry:last-child {
+    border-bottom: 1px solid #d8d2bf;
+  }
+  .entry:hover {
+    background: #f7e7c6;
+    transform: translateX(7px);
+    box-shadow: inset 4px 0 0 #c98a2c;
+    color: #211f1a;
+  }
+  .entry-meta {
+    font-size: 12px;
+    color: #5b564a;
+  }
+  .entry-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+  }
+
+  /* ---------- footer ---------- */
+  .foot {
+    background: var(--ink);
+    padding: 26px 24px;
+  }
+  .foot-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .foot-nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .foot-nav a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--paper);
+    padding: 8px 12px;
+    border-radius: 3px;
+    transition:
+      background 220ms ease,
+      color 220ms ease,
+      transform 240ms var(--spring);
+  }
+  .foot-nav a:hover {
+    background: var(--gold);
+    color: var(--ink);
+    transform: translateY(-3px);
+  }
+  .copy {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  @media (max-width: 620px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

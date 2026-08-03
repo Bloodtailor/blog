@@ -1,0 +1,100 @@
+---
+// Standalone layout for the homepage. Deliberately does not use Base.astro:
+// the homepage carries its own chrome (the cover), while every interior page
+// keeps the quieter ledger chrome.
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Aaron Orelup — data and systems by trade. I build with AI agents to find out where they break, and write down every one.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" type="application/rss+xml" title="Aaron Orelup" href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Delius+Unicase:wght@400;700&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Zen+Maru+Gothic:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --ink: #4a4a50;
+    --paper: #fbf3e8;
+    --pink: #f3b2be;
+    --gold: #f0cb8f;
+    --wood: #bb784e;
+    --deep-wood: #886747;
+    --link: #8a5a0b;
+    --matcha: #a89f5e;
+    --blue: #626c82;
+    --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  .skip {
+    position: absolute;
+    left: -9999px;
+  }
+  .skip:focus {
+    left: 12px;
+    top: 12px;
+    z-index: 50;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 10px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

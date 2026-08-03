@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || b.data.id.localeCompare(a.data.id),
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+---
+<Base title="The Ledger — Aaron Orelup" description="A running ledger of what I'm learning about AI — agents, automation, and whatever breaks along the way.">
+  <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-ink-soft); margin-top: 1.5rem;">
+    A running ledger of what I'm learning about AI &mdash; agents, automation, and whatever
+    breaks along the way.
+  </p>
+
+  <div class="ledger">
+    {posts.length === 0 && (
+      <p class="empty-ledger">No entries filed yet. First one's coming.</p>
+    )}
+    {posts.map((post) => (
+      <a class="ledger-row" href={`/posts/${post.slug}/`}>
+        <div class="ledger-meta">
+          <span class="id">{post.data.id}</span>
+          {dateFmt.format(post.data.date)}
+        </div>
+        <div>
+          <h2 class="ledger-title">{post.data.title}</h2>
+          <p class="ledger-summary">{post.data.summary}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>
