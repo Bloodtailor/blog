@@ -57,16 +57,13 @@ Then verify (allow a few minutes for Pages):
 - If syndication ran: confirm dev.to + Bluesky posts exist and the X charge
   (~$0.20) shows in the developer dashboard
 
-## Not included (decide later)
+## Notes
 
-- The **1h53m full session recording** (340MB webm) exceeds the Pages
-  per-file limit by an order of magnitude. It lives in the game repo at
-  `playthrough_presentation/recording/full_session.webm` (gitignored).
-  Options if it should be public: Cloudflare R2 behind the same domain, or
-  YouTube (unlisted) embedded in the post. The post currently says "if people
-  want it I'll put it somewhere," so nothing is broken by deferring.
-- The presentation's source of truth stays in the game repo
-  (`playthrough_presentation/`, PR #183). If the deck is ever regenerated,
-  re-copy index/app/player/data + audio/ + shots/ here and re-apply the two
-  web-only tweaks (responsive CSS block at the end of app.css, rail-back
-  link in index.html).
+- The 1h53m session recording has been **deleted at Aaron's request** (it
+  served its one purpose: settling the CoCaTok animation question). The
+  post's closing paragraph already says so — no dangling promises.
+- This folder is now the presentation's **only** home — it was removed
+  from the game repo. The narration source + audio pipeline live in this
+  repo at `scripts/presentations/keeper-and-the-beacon/` (script.md +
+  generate_audio.py, ELEVENLABS_API_KEY env var) if the narration ever
+  needs regenerating.

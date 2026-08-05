@@ -78,7 +78,9 @@ The narration is ElevenLabs again (same pipeline as the
 keep). The player is a few hundred lines of vanilla JS the agent wrote to Ken Burns its
 own screenshots in sync with the audio.
 
-The full 1h53m screen recording of the session exists too, but at 340MB it's not
-web-friendly; if people want it I'll put it somewhere. The presentation is the better
-watch anyway. It ends with a line I didn't write and can't stop thinking about — its
-verdict on the game: *"it is the only game I have played where mercy is a build."*
+The agent also screen-recorded the entire 1h53m session, which turned out to be useful
+exactly once — reviewing it settled a bug question its screenshots couldn't (an animation
+it thought never played had simply finished between captures) — and then I deleted it.
+The presentation is the artifact worth keeping. It ends with a line I didn't write and
+can't stop thinking about — its verdict on the game: *"it is the only game I have played
+where mercy is a build."*
