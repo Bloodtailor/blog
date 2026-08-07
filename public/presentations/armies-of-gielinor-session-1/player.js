@@ -676,11 +676,12 @@ appendixBtn.addEventListener('click', () => {
 document.addEventListener(
   'keydown',
   (event) => {
-    if (lbIndex >= 0) {
+    if (lightbox.classList.contains('open')) {
       if (event.key === 'Escape') closeLightbox();
-      else if (event.key === 'ArrowRight') openLightbox(lbIndex + 1);
-      else if (event.key === 'ArrowLeft') openLightbox(lbIndex - 1);
-      else if (event.key !== ' ') return;
+      // Pair mode is a single two-up view with nothing to page through.
+      else if (event.key === 'ArrowRight' && lbIndex >= 0) openLightbox(lbIndex + 1);
+      else if (event.key === 'ArrowLeft' && lbIndex >= 0) openLightbox(lbIndex - 1);
+      else if (event.key !== ' ' && event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
       event.preventDefault();
       event.stopImmediatePropagation();
     } else if (document.body.classList.contains('mode-appendix')) {
