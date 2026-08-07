@@ -1,0 +1,35 @@
+---
+// One ledger entry. The standalone /ledger/<slug>/ page renders this; the homepage
+// overlay fetches that page and lifts [data-post-article] out of it, so the markdown
+// has exactly one renderer and the two never drift.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+---
+
+<article data-post-article style="width:100%;max-width:720px;padding-bottom:60px">
+  <a
+    href="/ledger"
+    data-close-reader
+    data-no-fly
+    class="pc-link-accent"
+    style="display:inline-block;margin:0 0 30px;font-size:12.5px;letter-spacing:0.08em;color:var(--pc-accent);text-decoration:none"
+  >← LEDGER</a>
+
+  <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.7;color:var(--pc-accent);margin-bottom:10px">
+    {post.data.id} <span style="color:var(--pc-quiet)">/ {dateFmt.format(post.data.date)}</span>
+  </div>
+  <h1 style="margin:0 0 14px;font-family:'Zen Maru Gothic',sans-serif;font-size:33px;line-height:1.2;font-weight:700;color:var(--pc-head);letter-spacing:-0.015em;text-wrap:pretty">{post.data.title}</h1>
+  <p style="margin:0 0 34px;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.55;color:var(--pc-soft);text-wrap:pretty">{post.data.summary}</p>
+  <div style="height:1px;background:var(--pc-line);margin:0 0 34px"></div>
+
+  <div class="pc-prose">
+    <Content />
+  </div>
+</article>

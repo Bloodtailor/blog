@@ -74,7 +74,7 @@ for it deliberately: don't tell me what you did, *show me the story of what you 
 with the receipts you collected while doing it.
 
 The narration is ElevenLabs again (same pipeline as the
-[Grind & Grimoire](/posts/grind-and-grimoire/) voice lines — that API keeps earning its
+[Grind & Grimoire](/ledger/grind-and-grimoire/) voice lines — that API keeps earning its
 keep). The player is a few hundred lines of vanilla JS the agent wrote to Ken Burns its
 own screenshots in sync with the audio.
 

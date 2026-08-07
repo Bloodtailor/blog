@@ -56,7 +56,7 @@ Then Fable 5 wrote the actual lines, and this is the part I didn't expect: it is
 funny. The voice lines land. The shop scenes land. I gave it the shape of every joke and it
 filled them in better than I would have.
 
-I don't think that contradicts what I found building [BLACKWATER](/posts/blackwater-weekend/) —
+I don't think that contradicts what I found building [BLACKWATER](/ledger/blackwater-weekend/) —
 that the model resists creative writing. It's the same finding with the constraint changed.
 Here every piece of writing was small, bounded, and pinned to a mechanic I'd already
 specified. That's not a long-horizon creative task. That's filling in a form, and it's

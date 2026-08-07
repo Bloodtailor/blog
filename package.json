@@ -8,13 +8,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "new-post": "node scripts/new-post.mjs",
-    "syndicate": "node scripts/syndicate.mjs"
+    "notify-agent": "node scripts/notify-agent.mjs"
   },
   "dependencies": {
-    "astro": "^4.15.0",
     "@astrojs/rss": "^4.0.9",
+    "astro": "^4.15.0",
     "gray-matter": "^4.0.3",
-    "@atproto/api": "^0.13.18",
-    "oauth-1.0a": "^2.2.6"
+    "nodemailer": "^9.0.5",
+    "three": "^0.160.0"
   }
 }

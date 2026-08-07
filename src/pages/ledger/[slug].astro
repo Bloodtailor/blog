@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import PanelPage from '../../layouts/PanelPage.astro';
+import PostView from '../../components/panel/PostView.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+---
+<PanelPage title={`${post.data.title} — Aaron Orelup`} description={post.data.summary} active="ledger">
+  <PostView post={post} />
+</PanelPage>

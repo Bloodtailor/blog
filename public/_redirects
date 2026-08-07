@@ -1,0 +1,4 @@
+# Posts moved from /posts/<slug>/ to /ledger/<slug>/ when the site took on the tea house
+# design. AO-004 and AO-005 were syndicated under the old paths, so these stay forever.
+/posts/* /ledger/:splat 301
+/posts /ledger 301

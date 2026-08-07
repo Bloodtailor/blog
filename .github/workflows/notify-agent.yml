@@ -1,0 +1,45 @@
+# On a new post, email it to the OpenClaw agent. The agent decides whether to post it
+# anywhere, where, in what words, and whether to check with Aaron first — this workflow
+# publishes nothing to any social account.
+name: Hand new posts to the agent
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/posts/**"
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - name: Email the new post to the agent
+        env:
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
+        run: npm run notify-agent
+
+      - name: Commit hand-off state
+        run: |
+          git config user.name "notify-bot"
+          git config user.email "actions@github.com"
+          git add .syndicated.json
+          git diff --staged --quiet || git commit -m "chore: record agent hand-off [skip ci]"
+          git push
