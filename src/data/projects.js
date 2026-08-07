@@ -41,6 +41,19 @@ export const PROJECTS = [
     post: null
   },
   {
+    name: 'Armies of Gielinor',
+    tagline: 'a game that died in 2018, rebuilt from screenshots',
+    blurb: 'Jagex shipped this turn-based strategy game on FunOrb; FunOrb died in 2018 and took it with it, leaving wiki pages and a handful of screenshots. Claude rebuilt it from those — every sprite and sound generated fresh, no original assets. It ships with an in-browser content editor: click anything in a running match and you are editing that exact thing. A fan tribute, not affiliated with Jagex.',
+    href: '/games/armies-of-gielinor/',
+    external: false,
+    year: 2026,
+    status: 'playable',
+    tags: ['gamedev', 'agents', 'gauntlet loop', 'content editor'],
+    post: 'armies-of-gielinor-gauntlet',
+    shot: '/media/armies-of-gielinor/card.webp',
+    shotLabel: 'The recreation, mid-match'
+  },
+  {
     name: 'BLACKWATER',
     tagline: 'cave-diving zombies, built in a weekend',
     blurb: 'Black Ops zombies, except you are cave diving. Procedural cave graph, a full in-game level editor, and 58 commits across four days. All audio — sound design, voice lines, music — came out of the ElevenLabs API.',
