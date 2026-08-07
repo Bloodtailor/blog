@@ -1,0 +1,30 @@
+﻿agent                                       model       output tok  msgs  tools  wall-clock
+------------------------------------------------------------------------------------------------
+main orchestrator                           fable-5     264,769     193   304    117.1 min
+research: aog-mechanics                     fable-5     57,140      39    53     14.2 min
+research: aog-visuals                       fable-5     51,122      36    69     16.6 min
+research: aog-units                         fable-5     46,712      32    44     12.8 min
+research: reference-images                  fable-5     44,678      26    34     13.8 min
+review: instrumentation-robustness          fable-5     33,440      10    21     8.0 min
+review: foundation-vs-code                  fable-5     32,389      22    39     10.0 min
+review: spec-buildability                   fable-5     30,443      12    21     10.6 min
+review: chain-risk-generalist               fable-5     29,194      38    57     10.9 min
+research: aog-scenarios                     fable-5     28,867      32    37     7.7 min
+review: content-model-vs-editor             fable-5     27,682      17    32     7.2 min
+review: handoff-executability               fable-5     25,397      24    30     6.5 min
+review: standards-executability             fable-5     22,931      18    35     8.7 min
+research: critique-literature               fable-5     21,389      10    29     6.8 min
+research: aog-mechanics (pre-crash, interrupted)fable-5     17,847      32    46     7.0 min
+research: aog-scenarios (pre-crash, interrupted)fable-5     16,499      29    34     6.2 min
+research: aog-visuals (pre-crash, interrupted)fable-5     16,288      23    37     6.6 min
+research: aog-units (pre-crash, interrupted)fable-5     16,261      30    38     7.0 min
+research: reference-images (pre-crash, interrupted)fable-5     13,582      14    14     6.1 min
+research: judging-methods                   fable-5     8,395       15    24     5.9 min
+research: gauntlet-skill                    fable-5     7,395       8     11     4.0 min
+------------------------------------------------------------------------------------------------
+TOTAL                                                   812,420
+
+PER-MODEL SUMMARY (agent wall-clocks overlap; they ran concurrently)
+model               agents  output tok    summed agent wall-clock
+----------------------------------------------------------------------
+fable-5             21      812,420       293.7 min

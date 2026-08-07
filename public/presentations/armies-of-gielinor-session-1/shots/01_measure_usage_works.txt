@@ -1,0 +1,25 @@
+﻿{
+  "window": {
+    "since": "2026-08-07T03:55:00.000Z",
+    "until": "now"
+  },
+  "files_scanned": 1,
+  "assistant_messages": 14,
+  "distinct_transcripts": 1,
+  "totals": {
+    "input_tokens": 27,
+    "output_tokens": 16477,
+    "cache_creation_input_tokens": 57476,
+    "cache_read_input_tokens": 1055909
+  },
+  "by_model": {
+    "claude-fable-5": {
+      "input_tokens": 27,
+      "output_tokens": 16477,
+      "cache_creation_input_tokens": 57476,
+      "cache_read_input_tokens": 1055909,
+      "messages": 14
+    }
+  },
+  "source": "measured"
+}

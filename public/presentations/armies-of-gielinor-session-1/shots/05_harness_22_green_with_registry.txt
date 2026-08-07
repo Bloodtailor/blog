@@ -1,0 +1,53 @@
+﻿
+> test:selftest
+> node tests/run-selftest.mjs
+
+node.exe : [WebServer] (node:11492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+stub build -> C:\Users\soulo\Organized\Personal\My Projects\Armies of Gielinor\tests\stub-game\dist\index.html (2 assets)
+[harness] target: stub (C:\Users\soulo\Organized\Personal\My Projects\Armies of Gielinor\tests\stub-game\dist)
+
+Running 23 tests using 4 workers
+
+(node:16052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\specs\asset-integrity.spec.mjs:41:3 › asset integrity › manifest entries all exist, parse, and self-identify (13ms)
+  ok  5 tests\specs\asset-integrity.spec.mjs:53:3 › asset integrity › every referenced asset ID resolves; no dangling references (2ms)
+  ok  6 tests\specs\asset-integrity.spec.mjs:67:3 › asset integrity › every manifest asset file exists and matches its declared type (4ms)
+  ok  7 tests\specs\asset-integrity.spec.mjs:96:3 › asset integrity › shipped bundle hygiene: no eval, size budget respected (2ms)
+[self-play] side0=6 side1=6 draws=0 medianTurns=10
+  ok  1 tests\specs\selfplay.spec.mjs:9:3 › self-play › N seeded AI-vs-AI matches terminate inside the band (157ms)
+  ok  2 tests\specs\determinism.spec.mjs:18:3 › determinism › same seed twice produces identical hash sequences (173ms)
+  ok  9 tests\specs\selfplay.spec.mjs:44:3 › self-play › illegal actions are impossible: applyAction throws (3ms)
+  ok 10 tests\specs\determinism.spec.mjs:26:3 › determinism › different seeds diverge (8ms)
+  ok 11 tests\specs\determinism.spec.mjs:36:3 › determinism › serialize/deserialize mid-match does not alter the continuation (3ms)
+  ok  4 tests\specs\foundation.spec.mjs:9:3 › foundation › F1: content is declarative and enumerable through the contract (173ms)
+  ok 12 tests\specs\foundation.spec.mjs:27:3 › foundation › F2: stable human-readable IDs, unique across content and assets (95ms)
+  ok 13 tests\specs\foundation.spec.mjs:42:3 › foundation › F3: override-aware asset loader — override shadows, revert restores (80ms)
+  ok 14 tests\specs\foundation.spec.mjs:63:3 › foundation › F4: game state serializes and round-trips to an identical state (78ms)
+  ok 15 tests\specs\foundation.spec.mjs:85:3 › foundation › F5: hot-reload hook — content patch is reflected without reload (72ms)
+  ok 16 tests\specs\foundation.spec.mjs:103:3 › foundation › F6: selection-to-ID — a rendered entity reports its content ID (79ms)
+  ok  8 tests\specs\smoke.spec.mjs:8:3 › smoke › loads over http from a subpath: no console errors, canvas renders, turn advances (704ms)
+  ok 17 tests\specs\foundation.spec.mjs:118:3 › foundation › F7 vertical slice: editor UI edit -> visible in game -> export -> reimport -> identical (248ms)
+  ok 19 tests\specs\foundation.spec.mjs:155:3 › foundation › T: tool registration interface — register, route by content type, mount, openFor (81ms)
+  ok 18 tests\specs\smoke.spec.mjs:31:3 › smoke › loads from file:// (double-click posture) (244ms)
+  ok 20 tests\specs\foundation.spec.mjs:187:3 › foundation › T: jump-from-game — selection resolves to a tool via the registry (81ms)
+  -  21 tests\specs\smoke.spec.mjs:48:3 › smoke › performance: interactive time and frame rate
+  ok 22 tests\specs\foundation.spec.mjs:204:3 › foundation › T: undo/redo through the editor UI (200ms)
+  ok 23 tests\specs\foundation.spec.mjs:222:3 › foundation › hostile bundles are rejected with readable errors, never crashes (79ms)
+
+  1 skipped
+  22 passed (2.4s)
+

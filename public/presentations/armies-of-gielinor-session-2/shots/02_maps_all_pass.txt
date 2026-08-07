@@ -1,0 +1,257 @@
+check-maps: 6 maps, mover unit.barbarian-chieftain (class skirmish)
+terrain costs: b=0.67 x=0.67 f=2 m=X o=1 r=3.03 e=X s=3.03 t=0.67 w=X
+
+==============================================================================
+map.misthalin-medium-1  "The Four Fords"  30x30  turnLimit 20  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         30x30, 20 structures, 4 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 3.33, 3.33 | slot 1 villages @ 3.33, 3.33 | slot 2 villages @ 3.33, 3.33 | slot 3 villages @ 3.33, 3.33
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> tower(13,4) 6.00 | slot 1 -> tower(16,25) 6.00 | slot 2 -> tower(25,13) 6.00 | slot 3 -> tower(4,16) 6.00  spread 0.0%
+  [ ok ] (d) contested structure between starts
+         0-1: span 25.67, 8 contested on route | 0-2: span 13.00, 1 contested on route | 0-3: span 13.00, 1 contested on route | 1-2: span 13.00, 1 contested on route | 1-3: span 13.00, 1 contested on route | 2-3: span 25.67, 8 contested on route
+  [ ok ] (e) impassable budget
+         84/900 = 9.3% (budget 25.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 25.67
+
+    012345678901234567890123456789
+  0 oooooooooooooorooooooooooooooo
+  1 offfoooooooooorooooommoooffffo
+  2 offmoooooooooorfffofffoooooffo
+  3 ofomooooVooooorfffoooVoooommfo
+  4 ofooooootooooWroooosotoooooooo
+  5 oooooPttttttttbtttttttttPooooo
+  6 oooootooootmmoroooooossotooooo
+  7 oooootssootmooroooooossotooooo
+  8 omfVttssfftoooroooffffoottVooo
+  9 omfootoofftoooroooooffootooooo
+ 10 oofostoofotoomrttttttttttooooo
+ 11 oooootoofotfmmotfffooommtooooo
+ 12 ooffotooootfmfotfmmoooomtooooo
+ 13 ooffotooootffootofmmooootWoooo
+ 14 ooffotoooottttVVooorrrrrbrrrrr
+ 15 rrrrrbrrrrroooVVttttooootoffoo
+ 16 ooooWtoooommfotoofftooootoffoo
+ 17 oooootmoooommftofmftooootoffoo
+ 18 oooootmmoooffftommftofootooooo
+ 19 ooooottttttttttrmootofootsofoo
+ 20 oooootooffoooooroootffootoofmo
+ 21 oooVttooffffoooroootffssttVfmo
+ 22 oooootossooooooroomtoosstooooo
+ 23 oooootossoooooorommtooootooooo
+ 24 oooooPtttttttttbttttttttPooooo
+ 25 ooooooootosoooorWooootoooooofo
+ 26 ofmmooooVooofffroooooVoooomofo
+ 27 offooooofffofffroooooooooomffo
+ 28 offffooommoooooroooooooooofffo
+ 29 oooooooooooooooroooooooooooooo
+    012345678901234567890123456789
+    P portal  V village  W tower   V0(8,3) V2(21,3) W-(13,4) P0(5,5) P2(24,5) V0(3,8) V2(26,8) W-(25,13) V-(14,14) V-(15,14) V-(14,15) V-(15,15) W-(4,16) V3(3,21) V1(26,21) P3(5,24) P1(24,24) W-(16,25) V3(8,26) V1(21,26)
+
+==============================================================================
+map.misthalin-small-1  "Ironrim Ford"  20x20  turnLimit 15  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         20x20, 14 structures, 2 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 2.00, 4.00 | slot 1 villages @ 2.00, 3.33
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> village(10,2) 7.33 | slot 1 -> village(10,17) 6.67  spread 4.8%
+  [ ok ] (d) contested structure between starts
+         0-1: span 23.00, 5 contested on route
+  [ ok ] (e) impassable budget
+         172/400 = 43.0% (budget 45.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 23.67
+
+    01234567890123456789
+  0 mmmmmmmmmmmmmmmmmmmm
+  1 mmmmmmmmmmmmmmmmmmmm
+  2 mmooooooooVooofooomm
+  3 PttVttttttttoffffomm
+  4 mmoooooooootooffVomm
+  5 rrrVffoooootooffoomm
+  6 mmrrofoooootoofffVmm
+  7 mmorrooooootofffoomm
+  8 mmooroooVootofffoomm
+  9 mmffrroottWtooffmomm
+ 10 mmfforoootttVoommmmm
+ 11 mmfforroootoooommomm
+ 12 mmffforoootooooomomm
+ 13 mmVfffrrootoooommmmm
+ 14 mmfffoorottoooommVmm
+ 15 mmffrrrrotoooooooomm
+ 16 mmffrooootttttttVttP
+ 17 mmooroooooVooooooomm
+ 18 mmmmrmmmmmmmmmmmmmmm
+ 19 mmmmrmommmmmmmmmmmmm
+    01234567890123456789
+    P portal  V village  W tower   V-(10,2) P0(0,3) V0(3,3) V-(16,4) V0(3,5) V-(17,6) V-(8,8) W-(10,9) V-(12,10) V-(2,13) V1(17,14) V1(16,16) P1(19,16) V-(10,17)
+
+==============================================================================
+map.misthalin-small-2  "Crossroads Common"  20x20  turnLimit 15  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         20x20, 11 structures, 2 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 1.33, 1.33 | slot 1 villages @ 1.33, 2.67
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> village(4,3) 2.00 | slot 1 -> village(13,17) 2.00  spread 0.0%
+  [ ok ] (d) contested structure between starts
+         0-1: span 17.67, 2 contested on route
+  [ ok ] (e) impassable budget
+         0/400 = 0.0% (budget 25.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 19.00
+
+    01234567890123456789
+  0 oooooooooooofooooooo
+  1 oooooooooooffooooooo
+  2 ooVooooooffffoottVoo
+  3 oottVoooofofoootoooo
+  4 ooPoooooofffoottoooo
+  5 oVtooooooffffttooooo
+  6 ootttttffffottffoooo
+  7 oooooottfoootoofoooo
+  8 ooooofftootttoffoooo
+  9 ooffffotooWottffffoo
+ 10 oofffoottttoottoffoo
+ 11 oooffoootooofftooooo
+ 12 oooofffttooffotooooo
+ 13 oooofottoofffotooooo
+ 14 ooooootfffffottooVoo
+ 15 ooooootoffffotoootoo
+ 16 oooVtttofffoottPttoo
+ 17 ooooooooffoooVooVooo
+ 18 ooooooofffoooooooooo
+ 19 ooooooofffoooooooooo
+    01234567890123456789
+    P portal  V village  W tower   V0(2,2) V-(17,2) V-(4,3) P0(2,4) V0(1,5) W-(10,9) V1(17,14) V-(3,16) P1(15,16) V-(13,17) V1(16,17)
+
+==============================================================================
+map.misthalin-small-3  "Twin Meres"  20x20  turnLimit 15  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         20x20, 13 structures, 2 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 1.33, 2.00 | slot 1 villages @ 1.33, 2.00
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> village(17,11) 2.67 | slot 1 -> village(2,8) 2.67  spread 0.0%
+  [ ok ] (d) contested structure between starts
+         0-1: span 17.33, 5 contested on route
+  [ ok ] (e) impassable budget
+         32/400 = 8.0% (budget 25.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 19.33
+
+    01234567890123456789
+  0 ffffffffooossfffffff
+  1 fffffoofosooosofffff
+  2 ffffooooosososooooff
+  3 ffoooofffssootVoooff
+  4 foPtVofffssssttoooof
+  5 ootooofffffoooooofoo
+  6 oVtooooooffffffmmmmo
+  7 oottttttofffffmmoooo
+  8 ooVoorrtooooffmfommm
+  9 ooooorrtotWooomooofo
+ 10 mommoooVotrroommmooo
+ 11 mommmootttrroooooVoo
+ 12 mooffooooVttttttttoo
+ 13 mmofoofooooooooootVo
+ 14 ffooofffffffffoootoo
+ 15 ffffoffffsffffoVtPof
+ 16 ffffoofffsffffooooof
+ 17 foVooooosssfoofffoff
+ 18 ooooofffoooosffffoff
+ 19 ooofffffossosffffooo
+    01234567890123456789
+    P portal  V village  W tower   V-(14,3) P1(2,4) V1(4,4) V1(1,6) V-(2,8) W-(10,9) V-(7,10) V-(17,11) V-(9,12) V0(18,13) V0(15,15) P0(17,15) V-(2,17)
+
+==============================================================================
+map.misthalin-small-4  "The Causeways"  20x20  turnLimit 15  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         20x20, 11 structures, 2 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 2.00, 3.33 | slot 1 villages @ 1.67, 2.00
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> village(16,6) 2.33 | slot 1 -> village(4,12) 3.00  spread 12.5%
+  [ ok ] (d) contested structure between starts
+         0-1: span 14.33, 4 contested on route
+  [ ok ] (e) impassable budget
+         211/400 = 52.8% (budget 55.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 16.33
+
+    01234567890123456789
+  0 eeeeeeeeeeeeeeeeeeee
+  1 eeeeffoeeeoooeooomee
+  2 eeeefVtbbbtttoofoooe
+  3 eeeeooteeeooVoooVooe
+  4 eeeeeebeeeootooPomoe
+  5 eeeeeebeeeootooooooe
+  6 eeeeeoobbbttttttVofe
+  7 eeeeotfeeeeetoootoee
+  8 eeeeoteeeeeetoootoee
+  9 eeeotteeetbbteooteee
+ 10 eeeotooooteeeeeebeee
+ 11 eeeotooooteeeeeebeee
+ 12 eeooVoomWteeeeeotoee
+ 13 eeootttooteeeefotfee
+ 14 eefoVotooteeooootoee
+ 15 eeoooPttVtbbttttVmme
+ 16 eoooooooooeeofooomme
+ 17 eeoooofooeeeeeeemmee
+ 18 eeooooomeeeeeeeeeeee
+ 19 eeeeeeeeeeeeeeeeeeee
+    01234567890123456789
+    P portal  V village  W tower   V-(5,2) V0(12,3) V0(16,3) P0(15,4) V-(16,6) V-(4,12) W-(8,12) V1(4,14) P1(5,15) V1(8,15) V-(16,15)
+
+==============================================================================
+map.selfplay-default  "Mirror Ford"  20x20  turnLimit 15  PASS
+==============================================================================
+  [ ok ] (a) geometry and legality
+         20x20, 10 structures, 2 starts
+  [ ok ] (b) start economy (portal + 2 villages)
+         slot 0 villages @ 3.33, 3.33 | slot 1 villages @ 3.33, 3.33
+  [ ok ] (c) fair distance to nearest contested structure
+         slot 0 -> village(2,7) 7.33 | slot 1 -> village(17,12) 7.33  spread 0.0%
+  [ ok ] (d) contested structure between starts
+         0-1: span 16.33, 4 contested on route
+  [ ok ] (e) impassable budget
+         32/400 = 8.0% (budget 25.0%, declared)
+  [ ok ] (f) every structure reachable by unit.barbarian-chieftain
+         worst structure distance 17.00
+  [ ok ] (g) 180-degree rotational symmetry
+         terrain, structures, ownership and starts all mirror exactly
+
+    01234567890123456789
+  0 oooooooooooooooooooo
+  1 offfooooooooooooooff
+  2 offfommooooVooooomff
+  3 ooooomooootttttPomff
+  4 ooooooooootooootoooo
+  5 mmooofffootoffotoooo
+  6 moooofffootoffottVoo
+  7 ooVtossoootoffootorr
+  8 oootosoffotoooorbroo
+  9 oootoooooWtmrrrotooo
+ 10 oootorrrmtWoooootooo
+ 11 oorbrooootoffosotooo
+ 12 rrotooffotooossotVoo
+ 13 ooVttoffotoofffoooom
+ 14 ooootoffotoofffooomm
+ 15 ooootooootoooooooooo
+ 16 ffmoPtttttoooomooooo
+ 17 ffmoooooVoooommofffo
+ 18 ffoooooooooooooofffo
+ 19 oooooooooooooooooooo
+    01234567890123456789
+    P portal  V village  W tower   V1(11,2) P1(15,3) V1(17,6) V-(2,7) W-(9,9) W-(10,10) V-(17,12) V0(2,13) P0(4,16) V0(8,17)
+
+==============================================================================
+all 6 maps pass

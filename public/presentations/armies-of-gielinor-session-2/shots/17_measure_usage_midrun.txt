@@ -1,0 +1,39 @@
+{
+  "window": {
+    "since": "2026-08-07T06:21:06.000Z",
+    "until": "now"
+  },
+  "transcript_files": 95,
+  "assistant_messages": 3861,
+  "distinct_sessions": 1,
+  "totals": {
+    "input_tokens": 20551,
+    "output_tokens": 4106020,
+    "cache_creation_input_tokens": 11725321,
+    "cache_read_input_tokens": 541762881
+  },
+  "by_model": {
+    "claude-opus-5": {
+      "input_tokens": 19796,
+      "output_tokens": 3692165,
+      "cache_creation_input_tokens": 10544091,
+      "cache_read_input_tokens": 437783693,
+      "messages": 3482
+    },
+    "claude-sonnet-5": {
+      "input_tokens": 362,
+      "output_tokens": 162757,
+      "cache_creation_input_tokens": 539956,
+      "cache_read_input_tokens": 18693665,
+      "messages": 181
+    },
+    "claude-fable-5": {
+      "input_tokens": 393,
+      "output_tokens": 251098,
+      "cache_creation_input_tokens": 641274,
+      "cache_read_input_tokens": 85285523,
+      "messages": 198
+    }
+  },
+  "source": "measured"
+}
