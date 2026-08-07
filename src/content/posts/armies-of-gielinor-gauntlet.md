@@ -208,14 +208,24 @@ you're buying.
 
 ## The defects became the editor
 
-Ships later today, same bundle: a full content editor at
-[/games/armies-of-gielinor/](/games/armies-of-gielinor/) — units, maps, assets, AI tuning,
-scenarios — public, with the deployed game itself read-only. Its spec is
-the defect log. All 58 escaped defects were written as editor requirements rather than a
-scoreboard, on one test: can you jump from a running game into the editor, change the thing
-the critic complained about, and be back in the match in under a minute?
+It's live in the same bundle — [open the game with the editor on](/games/armies-of-gielinor/?editor=1),
+or click "Editor" under the game frame. Seven tools: units, assets, maps, AI tuning,
+settings, themes, scenarios. Full authoring in your browser, drafts saved locally,
+export/import as a zip — and zero ability to alter the deployed game, which resets to
+canonical on one (well, two) clicks. Its spec is the defect log: all 58 escaped defects
+were written as editor requirements rather than a scoreboard, on one test — can you jump
+from a running game into the editor, change the thing the critic complained about, and be
+back in the match in under a minute?
 
-<!-- editor-capture: added in phase 6 -->
+![Clicking the Barbarian Chieftain in a running match opens the unit editor on exactly that unit — stats, traits, abilities, and a jump straight to its sprite in the asset replacer](/media/armies-of-gielinor/editor-jump-from-game.jpg)
+
+That screenshot is the under-a-minute test passing: notice the thing in-game, click it,
+land on its exact entity, change the number, watch the match pick it up without a rebuild.
+The three AI defects the critic logged are now sliders with a self-play probe button next
+to them. The editor build itself was seven parallel agents against a frozen tool-registry
+contract, verified by 81 new round-trip tests (164 green in total) — and the three agents
+that died mid-run all turned out to have committed working, tested code before dying,
+which is its own small lesson about where to look first.
 
 ## What I'd change
 

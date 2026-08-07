@@ -14,6 +14,11 @@
           The Build:<br />Running the Gauntlet
         </div>
         <ul class="chapters" id="chapters"></ul>
+        <div class="rail-divider"></div>
+        <button class="rail-appendix" id="appendix-btn" type="button">
+          Appendix
+          <span>Every frame, full size · the bill · running tally</span>
+        </button>
       </nav>
 
       <main class="main">
@@ -24,6 +29,32 @@
         <div class="stage" id="stage" aria-live="polite"></div>
         <div class="caption" id="caption"></div>
       </main>
+
+      <section class="appendix" id="appendix" aria-label="Appendix">
+        <div class="apx-head">
+          <div class="eyebrow">Appendix — static reference, no narration</div>
+          <h1>Session 2: The Build — the evidence, held still</h1>
+          <p>
+            Every frame the narration flies past, at full size and in capture order —
+            and then the part the deck cannot do for you. Ninety-seven judged
+            assets sit beside the 2009 artifact each was measured against, and
+            all twenty audio files play beside the brief that produced them.
+            The bill follows as tables you can sort and scroll. Nothing here is
+            re-stated from memory: every figure is measured by
+            <code>tools/measure-agents.mjs</code> or
+            <code>tools/measure-usage.mjs</code>.
+          </p>
+          <nav class="apx-jump">
+            <a href="#apx-shots">Screenshots</a>
+            <a href="#apx-pairs">Judge it yourself</a>
+            <a href="#apx-listen">Listening station</a>
+            <a href="#apx-model">By model</a>
+            <a href="#apx-session">Session totals</a>
+            <a href="#apx-agents">Every agent</a>
+            <a href="#apx-project">Project so far</a>
+          </nav>
+        </div>
+      </section>
 
       <div class="transport">
         <button class="control primary" id="play" type="button">Play</button>
@@ -37,8 +68,21 @@
       </div>
     </div>
 
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Full-screen capture">
+      <button class="lb-close" id="lb-close" type="button">Close · Esc</button>
+      <button class="lb-nav lb-prev" id="lb-prev" type="button" aria-label="Previous">‹</button>
+      <button class="lb-nav lb-next" id="lb-next" type="button" aria-label="Next">›</button>
+      <div class="lb-stage"><img id="lb-img" alt="" /><div id="lb-duo"></div></div>
+      <div class="lb-bar">
+        <div class="file" id="lb-file"></div>
+        <div class="cap" id="lb-cap"></div>
+        <div class="count" id="lb-count"></div>
+      </div>
+    </div>
+
     <audio id="narration" preload="metadata"></audio>
     <script src="data.js"></script>
+    <script src="appendix.js"></script>
     <script src="player.js"></script>
   </body>
 </html>

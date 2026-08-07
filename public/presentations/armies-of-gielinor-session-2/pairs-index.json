@@ -1,0 +1,491 @@
+[
+ {
+  "id": "aviansie",
+  "group": "neutral",
+  "defect": "DF-20: two silver wings vs one dark brown crescent"
+ },
+ {
+  "id": "barbarian-spear-woman",
+  "group": "neutral",
+  "defect": "DF-17: bandeau dropped to waist, long skirt vs trunks"
+ },
+ {
+  "id": "barbarian",
+  "group": "neutral",
+  "defect": "DF-16: floating hammer head, no haft or hand contact"
+ },
+ {
+  "id": "battle-tortoise",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "bedabin-nomad",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "black-bear",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "black-guard-dwarf",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "black-knight",
+  "group": "zamorak",
+  "defect": ""
+ },
+ {
+  "id": "centaur",
+  "group": "saradomin",
+  "defect": "DF-5: torso sits ON the horse like a rider"
+ },
+ {
+  "id": "crocodile",
+  "group": "menaphite",
+  "defect": "DF-57: stands too tall — iguana read"
+ },
+ {
+  "id": "crystalline-shape-shifter",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "cyclops",
+  "group": "bandos",
+  "defect": "DF-54: eye spans the whole head (owl-mask read)"
+ },
+ {
+  "id": "dagannoth",
+  "group": "neutral",
+  "defect": ""
+ },
+ {
+  "id": "dire-wolf",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "druid",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "dwarf-cannon",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "elemental-of-elidinis",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "elf-lady",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "elf-lord",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "elf-shieldmaiden",
+  "group": "seren",
+  "defect": "DF-56: shares one hooded body template with 2 siblings"
+ },
+ {
+  "id": "elf-songstress",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "elven-archer",
+  "group": "seren",
+  "defect": "DF-56: shares one hooded body template"
+ },
+ {
+  "id": "elven-pikemen",
+  "group": "seren",
+  "defect": "DF-56: shares one hooded body template"
+ },
+ {
+  "id": "ent",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "falcon",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "gargoyle",
+  "group": "zamorak",
+  "defect": ""
+ },
+ {
+  "id": "gnomecopter",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "goblin-priest",
+  "group": "bandos",
+  "defect": ""
+ },
+ {
+  "id": "goblin",
+  "group": "bandos",
+  "defect": ""
+ },
+ {
+  "id": "gorilla",
+  "group": "neutral",
+  "defect": "DF-35: fourth cream patch on shoulder, not muzzle"
+ },
+ {
+  "id": "greater-demon",
+  "group": "zamorak",
+  "defect": "DF-12: squat block vs the original’s tall lean frame"
+ },
+ {
+  "id": "grenwall",
+  "group": "seren",
+  "defect": ""
+ },
+ {
+  "id": "hellhound",
+  "group": "zamorak",
+  "defect": ""
+ },
+ {
+  "id": "hobgoblin",
+  "group": "bandos",
+  "defect": "DF-54: head reads as a wide hat; pole floats unheld"
+ },
+ {
+  "id": "icyene",
+  "group": "saradomin",
+  "defect": "DF-10: wings are separated slats, not a feathered plane"
+ },
+ {
+  "id": "jackal",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "jade-vine",
+  "group": "guthix",
+  "defect": "DF-33: hue drifted khaki, weakening the \"jade\" read"
+ },
+ {
+  "id": "jogre",
+  "group": "bandos",
+  "defect": "DF-54: face fully occluded by a plank-wide brim"
+ },
+ {
+  "id": "kalphite-queen",
+  "group": "menaphite",
+  "defect": "DF-57: narrow/stilted vs a wide sprawling mass"
+ },
+ {
+  "id": "king-black-dragon",
+  "group": "neutral",
+  "defect": ""
+ },
+ {
+  "id": "lion",
+  "group": "saradomin",
+  "defect": "DF-8: legs are rectangular pillars, no taper"
+ },
+ {
+  "id": "locust",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "menaphite-thug",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "monk",
+  "group": "saradomin",
+  "defect": ""
+ },
+ {
+  "id": "moss-giant",
+  "group": "guthix",
+  "defect": "DF-15: near-uniform green mass, arms merge"
+ },
+ {
+  "id": "mounted-terrorbird",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "mummy",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "necromancer",
+  "group": "zamorak",
+  "defect": "DF-13: staff + orb added; the original has no prop"
+ },
+ {
+  "id": "ogre-shaman",
+  "group": "bandos",
+  "defect": "DF-55: smooth-antialiased cape; leaf-green breaks ogre kinship"
+ },
+ {
+  "id": "ogre",
+  "group": "bandos",
+  "defect": ""
+ },
+ {
+  "id": "ogress",
+  "group": "bandos",
+  "defect": "DF-53: no female read; mistakable for the plain ogre"
+ },
+ {
+  "id": "ork",
+  "group": "bandos",
+  "defect": "DF-55: face void between white bars; smoke-puff axe"
+ },
+ {
+  "id": "ourg",
+  "group": "bandos",
+  "defect": "DF-55: head spikes float detached"
+ },
+ {
+  "id": "paladin",
+  "group": "saradomin",
+  "defect": ""
+ },
+ {
+  "id": "portal-mage",
+  "group": "neutral",
+  "defect": ""
+ },
+ {
+  "id": "priest",
+  "group": "saradomin",
+  "defect": ""
+ },
+ {
+  "id": "pyrelord",
+  "group": "zamorak",
+  "defect": "DF-32: mirror-symmetric 4-armed star vs slim offset column"
+ },
+ {
+  "id": "red-dragon",
+  "group": "neutral",
+  "defect": "DF-19: orange-red vs deep maroon; mirrored"
+ },
+ {
+  "id": "saradomin-mage",
+  "group": "saradomin",
+  "defect": "DF-6: flat sombrero, not a pointed wizard hat"
+ },
+ {
+  "id": "saradomin-owl",
+  "group": "saradomin",
+  "defect": "DF-10: wings are separated slats"
+ },
+ {
+  "id": "saradomin-ranger",
+  "group": "saradomin",
+  "defect": "DF-9: torso reads as cloud-blobs, not cloth"
+ },
+ {
+  "id": "scabarite-mage",
+  "group": "menaphite",
+  "defect": ""
+ },
+ {
+  "id": "sea-slug",
+  "group": "zamorak",
+  "defect": ""
+ },
+ {
+  "id": "skeleton",
+  "group": "zamorak",
+  "defect": "DF-14: round shield vs the original’s tall oval"
+ },
+ {
+  "id": "sphinx",
+  "group": "menaphite",
+  "defect": "DF-57: flank loses its navy-gold banding"
+ },
+ {
+  "id": "structure-portal",
+  "group": "structure",
+  "defect": ""
+ },
+ {
+  "id": "structure-temple",
+  "group": "structure",
+  "defect": ""
+ },
+ {
+  "id": "structure-tower",
+  "group": "structure",
+  "defect": ""
+ },
+ {
+  "id": "structure-village",
+  "group": "structure",
+  "defect": ""
+ },
+ {
+  "id": "tzhaar-ket",
+  "group": "neutral",
+  "defect": "DF-18: flat near-black body; lava is a painted rune"
+ },
+ {
+  "id": "unicorn",
+  "group": "saradomin",
+  "defect": "DF-8: legs are rectangular pillars, no taper"
+ },
+ {
+  "id": "void-knight",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "warrior-of-icthlarin",
+  "group": "menaphite",
+  "defect": "DF-57: over-armoured vs the bare-torso original"
+ },
+ {
+  "id": "werewolf",
+  "group": "zamorak",
+  "defect": "DF-11: head reads bat/cat; fur too light"
+ },
+ {
+  "id": "white-knight",
+  "group": "saradomin",
+  "defect": "DF-7: blue tabard dominates; original is near-white"
+ },
+ {
+  "id": "wolf",
+  "group": "guthix",
+  "defect": ""
+ },
+ {
+  "id": "zamorak-mage",
+  "group": "zamorak",
+  "defect": ""
+ },
+ {
+  "id": "zamorak-ranger",
+  "group": "zamorak",
+  "defect": "DF-31: quiver shaft near-black on black"
+ },
+ {
+  "id": "class-flying",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-helper",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-mage",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-creeper",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-ranger",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-skirmish",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-titan",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "class-warrior",
+  "group": "class icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-bandos",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-guthix",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-menaphite",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-neutral",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-saradomin",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-seren",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "faction-zamorak",
+  "group": "faction icon",
+  "defect": ""
+ },
+ {
+  "id": "mogre",
+  "group": "tier 3 — no reference exists",
+  "tier3": true,
+  "defect": "Style-bible unit-sprite checklist + “amphibious ogre”. Rubric pass; a transparent-hole pixel defect was fixed in the final round."
+ },
+ {
+  "id": "barbarian-chieftain",
+  "group": "tier 3 — no reference exists",
+  "tier3": true,
+  "defect": "Style-bible checklist + “leader kin of barbarian”. All four checks pass — and it inherited the barbarian’s floating-hammer defect (DF-16) uncaught."
+ },
+ {
+  "id": "dwarf-cannon-deployed",
+  "group": "tier 3 — no reference exists",
+  "tier3": true,
+  "defect": "Style-bible checklist + a written description of the deployed form. All four checks pass, zero findings, one round."
+ },
+ {
+  "id": "faction-zaros",
+  "group": "tier 3 — no reference exists",
+  "tier3": true,
+  "defect": "Family-consistency rubric — no Zaros icon was ever drawn. Round 2 passed 25px legibility at 0.608, inside the siblings’ band."
+ }
+]

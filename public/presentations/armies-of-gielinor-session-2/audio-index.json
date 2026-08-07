@@ -1,0 +1,284 @@
+{
+ "assets": [
+  {
+   "id": "sfx.select",
+   "kind": "sfx",
+   "file": "game-audio/sfx-select.mp3",
+   "kb": 9,
+   "purpose": "A unit is selected",
+   "when": "Fires on every click that picks up a unit — the most-heard sound in the game.",
+   "brief": "Setting a wooden playing piece down onto a stone war-board: a quick crisp dry wooden tap with a sharp percussive attack, softer and lower-pitched than a hardwood click but still bright and fast, not a thud, no ring, no bell, no metallic ping, no rumble. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 0.5,
+    "prompt_influence": 0.85
+   },
+   "verdict": "HIGH finding in round one — the critic read it as a rumble rather than a click. Re-rolled in the stretch phase; the transient was verified on attempt 2. This file is the re-roll."
+  },
+  {
+   "id": "sfx.move-step",
+   "kind": "sfx",
+   "file": "game-audio/sfx-move-step.mp3",
+   "kb": 12,
+   "purpose": "Each tile of a move",
+   "when": "Repeats once per tile as a unit walks its path.",
+   "brief": "One heavy boot step of an armoured soldier on packed dirt: a dull chunky thud with a faint leather creak and a small clink of mail. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 0.7,
+    "prompt_influence": 0.7
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.melee-hit",
+   "kind": "sfx",
+   "file": "game-audio/sfx-melee-hit.mp3",
+   "kb": 15,
+   "purpose": "A melee attack lands",
+   "when": "",
+   "brief": "A sword blade striking an iron shield once: a bright chunky clang with a solid dry thock underneath, cutting off quickly. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 0.9,
+    "prompt_influence": 0.75
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.arrow",
+   "kind": "sfx",
+   "file": "game-audio/sfx-arrow.mp3",
+   "kb": 17,
+   "purpose": "A ranged attack fires",
+   "when": "",
+   "brief": "A wooden longbow loosing an arrow, recorded close and loud: a sharp taut bowstring snap, an immediate fast shaft thwip through air, then a hard thunk into a wooden target. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1,
+    "prompt_influence": 0.6
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.magic-bolt",
+   "kind": "sfx",
+   "file": "game-audio/sfx-magic-bolt.mp3",
+   "kb": 17,
+   "purpose": "A magic attack fires",
+   "when": "",
+   "brief": "A small magic bolt cast from a wooden staff: a short bright sparkling zap with a glassy chime tail, thin and metallic, no deep bass. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1,
+    "prompt_influence": 0.7
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.fire-breath",
+   "kind": "sfx",
+   "file": "game-audio/sfx-fire-breath.mp3",
+   "kb": 29,
+   "purpose": "A fire-breath ability fires",
+   "when": "Dragons and the pyrelord.",
+   "brief": "A dragon exhaling a short gout of fire: a rough crackling burst of flame with a low throaty roar underneath, ending quickly. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1.8,
+    "prompt_influence": 0.7
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.death",
+   "kind": "sfx",
+   "file": "game-audio/sfx-death.mp3",
+   "kb": 24,
+   "purpose": "A unit dies",
+   "when": "",
+   "brief": "A soldier falling in battle: a short low descending groan, a clatter of armour plates, and a dull body thud onto dirt. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.7
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.capture-tick",
+   "kind": "sfx",
+   "file": "game-audio/sfx-capture-tick.mp3",
+   "kb": 9,
+   "purpose": "A structure is being captured",
+   "when": "Once per turn while a unit stands on an enemy or neutral structure.",
+   "brief": "One tiny bright metallic tick, a single ratchet tooth clicking over on a flag winch. Very short and thin. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 0.5,
+    "prompt_influence": 0.8
+   },
+   "verdict": "DF-51 — a thin bright \"tss\": 91% of its energy sits in 8–16kHz, against a chunky thock family. Logged as a judgment call, defensible as cut-through design."
+  },
+  {
+   "id": "sfx.capture-complete",
+   "kind": "sfx",
+   "file": "game-audio/sfx-capture-complete.mp3",
+   "kb": 29,
+   "purpose": "A structure changes hands",
+   "when": "",
+   "brief": "A banner raised over a captured village: a small rising three-note chime flourish on a bright bell, a soft cloth banner flap, and one low drum tap underneath. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1.8,
+    "prompt_influence": 0.6
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.summon",
+   "kind": "sfx",
+   "file": "game-audio/sfx-summon.mp3",
+   "kb": 29,
+   "purpose": "A unit is bought and placed",
+   "when": "",
+   "brief": "A creature summoned through a magic portal: a short rising shimmering swell of harp and hand bells with a soft airy pop at the peak. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1.8,
+    "prompt_influence": 0.6
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.portal-hum",
+   "kind": "sfx",
+   "file": "game-audio/sfx-portal-hum.mp3",
+   "kb": 48,
+   "purpose": "Ambient portal loop",
+   "when": "Plays near a portal structure.",
+   "brief": "A steady magical portal drone: a warm low hum with a slow shimmering overtone and a faint crystalline flutter. Even level throughout, no attack and no build, made to loop. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 3,
+    "prompt_influence": 0.6,
+    "loop": true
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.end-turn",
+   "kind": "sfx",
+   "file": "game-audio/sfx-end-turn.mp3",
+   "kb": 20,
+   "purpose": "The END TURN button",
+   "when": "",
+   "brief": "A muted medieval signal horn sounding two short falling notes with a soft drum tap: the call to end a turn. Chunky sampled brass. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 1.2,
+    "prompt_influence": 0.6
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.victory",
+   "kind": "sfx",
+   "file": "game-audio/sfx-victory.mp3",
+   "kb": 48,
+   "purpose": "The match is won",
+   "when": "",
+   "brief": "A short triumphant fanfare sting for winning a battle: a small brass ensemble on a rising major figure, a snare roll, and one bright bell hit, ending cleanly. Sequenced sampled orchestra, warm and mid-fidelity.",
+   "params": {
+    "duration_seconds": 3,
+    "prompt_influence": 0.55
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.defeat",
+   "kind": "sfx",
+   "file": "game-audio/sfx-defeat.mp3",
+   "kb": 48,
+   "purpose": "The match is lost",
+   "when": "",
+   "brief": "A short defeat sting for losing a battle: low brass and cellos falling through a minor cadence over one slow deep drum hit and a dull tolling bell, ending cleanly. Sequenced sampled orchestra, sombre, mid-fidelity.",
+   "params": {
+    "duration_seconds": 3,
+    "prompt_influence": 0.55
+   },
+   "verdict": ""
+  },
+  {
+   "id": "sfx.ui-click",
+   "kind": "sfx",
+   "file": "game-audio/sfx-ui-click.mp3",
+   "kb": 10,
+   "purpose": "Any menu button",
+   "when": "",
+   "brief": "A loud crisp interface button click recorded close and hot: a dry hardwood tick with a faint metallic snap and a very short decay. Dry close-miked single sample, small room, no reverb tail, no modern cinematic whoosh or sub-bass riser, slightly lo-fi like an early-2000s game sound bank.",
+   "params": {
+    "duration_seconds": 0.6,
+    "prompt_influence": 0.7
+   },
+   "verdict": ""
+  },
+  {
+   "id": "music.title",
+   "kind": "music",
+   "file": "game-audio/music-title.mp3",
+   "kb": 1541,
+   "purpose": "Title screen and main menu",
+   "when": "Loops under the logo lockup from launch until a match starts.",
+   "brief": "A heraldic fanfare for the title screen of a medieval fantasy war game. It opens with a bold brass fanfare call answered by french horns, then settles into a confident march in four: bowed and pizzicato strings carrying a noble stepwise theme, timpani and snare keeping the step, a wordless choir pad for weight, and a harp arpeggio underneath. Major key, bright and hopeful, steady at about 108 beats per minute with no tempo or key changes. Small sampled ensemble, warm mid-fidelity early-2000s game-soundtrack production, not modern cinematic, no drum kit, no synth arpeggios. Instrumental only, no sung words. An original composition. Composed as a seamless loop: it ends exactly as it begins so it can repeat forever.",
+   "params": {
+    "music_length_ms": 100000
+   },
+   "verdict": "DF-50 — bass-forward for a fanfare: 59% of energy below 250Hz, five times the 1–4kHz brass band. The melody may bury on laptop speakers."
+  },
+  {
+   "id": "music.misthalin",
+   "kind": "music",
+   "file": "game-audio/music-misthalin.mp3",
+   "kb": 1578,
+   "purpose": "Misthalin board theme",
+   "when": "The green farmland and river-town maps — the default skirmish theme.",
+   "brief": "A pastoral-regal march for the green farmlands and river towns of a fantasy kingdom. Warm strings carry a simple stepwise melody, a soft horn answers with a counter-line, light hand percussion and a quiet snare keep an unhurried march, and a plucked harp with a wooden recorder-like flute add colour. Major key, dignified and gentle rather than triumphant, about 96 beats per minute. Small sampled ensemble, warm mid-fidelity early-2000s game-soundtrack production, not modern cinematic, no drum kit, no synth arpeggios. Instrumental only, no sung words. An original composition. Composed as a seamless loop: it ends exactly as it begins so it can repeat forever.",
+   "params": {
+    "music_length_ms": 105000
+   },
+   "verdict": "DF-46 — the \"march\" half of the brief is not visible: no percussion periodicity, and the smallest 4–12kHz swing of the set. Loop junction has a ~5dB level step, the largest of the five."
+  },
+  {
+   "id": "music.kharidian-desert",
+   "kind": "music",
+   "file": "game-audio/music-kharidian-desert.mp3",
+   "kb": 1609,
+   "purpose": "Kharidian Desert board theme",
+   "when": "Sand, mesas and oasis maps.",
+   "brief": "A desert theme for a fantasy war game. A modal melody in a Phrygian-dominant scale is played on a reedy double-reed wind instrument and answered by a plucked long-necked lute, over hand percussion — frame drum, goblet drum, finger cymbals — and a low sustained drone. Sparse strings enter later for warmth. Hot, patient and a little mysterious, about 92 beats per minute. Small sampled ensemble, warm mid-fidelity early-2000s game-soundtrack production, not modern cinematic, no drum kit, no synth arpeggios. Instrumental only, no sung words. An original composition. Composed as a seamless loop: it ends exactly as it begins so it can repeat forever.",
+   "params": {
+    "music_length_ms": 105000
+   },
+   "verdict": "DF-47 — three smooth 15→4kHz descending sweeps (riser/whoosh family, off-idiom) at structural positions, including the loop point."
+  },
+  {
+   "id": "music.frozen-wastes",
+   "kind": "music",
+   "file": "game-audio/music-frozen-wastes.mp3",
+   "kb": 1585,
+   "purpose": "Frozen Wastes board theme",
+   "when": "Ice floes, stalagmites and cyan water.",
+   "brief": "A theme for a frozen northern wasteland in a fantasy war game. Sparse and cold: slow sustained string pads in a minor mode, a distant wordless choir, glassy bell and celesta chimes falling like ice, an occasional soft low timpani swell, and long silences between phrases. Very slow at about 64 beats per minute with no strong beat. Lonely, still and beautiful. Small sampled ensemble, warm mid-fidelity early-2000s game-soundtrack production, not modern cinematic, no drum kit, no synth arpeggios. Instrumental only, no sung words. An original composition. Composed as a seamless loop: it ends exactly as it begins so it can repeat forever.",
+   "params": {
+    "music_length_ms": 105000
+   },
+   "verdict": "DF-49 — the chime grid is metronomic (0.932 autocorrelation, strongest in the set) against a brief that asked for \"no strong beat\". 0.63 LU quieter than its siblings."
+  },
+  {
+   "id": "music.hallowvale-swamps",
+   "kind": "music",
+   "file": "game-audio/music-hallowvale-swamps.mp3",
+   "kb": 1599,
+   "purpose": "Hallowvale Swamps board theme",
+   "when": "Fog-bound cursed swamp maps.",
+   "brief": "A theme for a cursed fog-bound swamp in a fantasy war game: a low funeral dirge. Dark cellos and double basses move slowly through a minor mode under a tolling low church bell, a sustained organ-like drone, muted low choir hums, and a sparse muffled drum on the downbeat. About 56 beats per minute, heavy and oppressive but quiet, with air and room tone and no bright instruments. Small sampled ensemble, warm mid-fidelity early-2000s game-soundtrack production, not modern cinematic, no drum kit, no synth arpeggios. Instrumental only, no sung words. An original composition. Composed as a seamless loop: it ends exactly as it begins so it can repeat forever.",
+   "params": {
+    "music_length_ms": 105000
+   },
+   "verdict": "DF-48 — band-limited past dark into veiled: 0% energy above 4kHz, so the bells lack upper partials. Flattest dynamics of the set (LRA 2.9, no arc)."
+  }
+ ],
+ "post": {
+  "music": "ffmpeg: strip trailing silence (silencedetect n=-50dB:d=0.3 -> atrim); loop seam = [last 1.5s][first 1.5s]acrossfade=d=1.5:c1=qsin:c2=qsin, concatenated in front of the middle so both junctions are continuous in the source timeline; two-pass loudnorm I=-16:TP=-1.5:LRA=11; libmp3lame 44.1kHz 128kbps.",
+  "sfx": "ffmpeg: single volume= gain so the whole SFX set lands on one integrated loudness with true peak <= -1.5 dBTP (loudness measured on a >=4s self-repeat, since EBU R128 gating needs more than a one-shot); libmp3lame 44.1kHz 128kbps."
+ }
+}
