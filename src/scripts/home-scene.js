@@ -381,6 +381,7 @@ export class HomeScene {
   mount() {
     this.boot(); this.bindAvatar(); this.bindLedger(); this.bindModeToggle(); this.bindFeedCopy();
     this.applyView();
+    this.warmPanelImages();
     this.onPanelKey = (e) => {
       if (e.key === 'Escape' && this.panelOpen) { e.preventDefault(); this.closePanel(); }
     };
@@ -408,6 +409,23 @@ export class HomeScene {
     window.removeEventListener('popstate', this.onPop);
     clearTimeout(this._panelOpenT); clearTimeout(this._panelInnerT); clearTimeout(this._panelCloseT);
     this.teardown();
+  }
+
+  // The project screenshots ship with loading="lazy", which is right on the standalone
+  // /projects page but never resolves here: the panel's views start display:none, so the
+  // images never enter the viewport, and showing the view later does not re-trigger the
+  // fetch — the tiles stay empty for the whole visit. Flipping loading to eager does
+  // start the fetch even while hidden, so warm them once the browser is idle. That keeps
+  // them off the scene's critical path and still has them cached before anyone can
+  // scroll to a card and click it.
+  warmPanelImages() {
+    const warm = () => {
+      document.querySelectorAll('#panel-screen img[loading="lazy"]').forEach((img) => {
+        img.loading = 'eager';
+      });
+    };
+    if (typeof requestIdleCallback === 'function') requestIdleCallback(warm, { timeout: 3000 });
+    else setTimeout(warm, 1200);
   }
 
   // the feed URL is a build-time constant, but the copy button needs a live handler
