@@ -1,6 +1,10 @@
 # On a new post, email it to the OpenClaw agent. The agent decides whether to post it
 # anywhere, where, in what words, and whether to check with Aaron first — this workflow
 # publishes nothing to any social account.
+#
+# Can also be run by hand ("Run workflow") to catch up anything a failed run missed.
+# A manual run sends every post not already recorded in .syndicated.json, or just one
+# if you give it a slug.
 name: Hand new posts to the agent
 
 on:
@@ -8,6 +12,12 @@ on:
     branches: [main]
     paths:
       - "src/content/posts/**"
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Slug to send on its own (blank = every outstanding post)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -19,6 +29,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
@@ -29,12 +40,18 @@ jobs:
       - name: Email the new post to the agent
         env:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
-        run: npm run notify-agent
+        run: |
+          if [ -n "${{ inputs.only }}" ]; then
+            npm run notify-agent -- --only "${{ inputs.only }}"
+          else
+            npm run notify-agent
+          fi
 
       - name: Commit hand-off state
         run: |

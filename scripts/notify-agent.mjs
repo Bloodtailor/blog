@@ -21,12 +21,32 @@ const STATE_FILE = '.syndicated.json';
 const TO = process.env.NOTIFY_TO || 'goobie.orelup@gmail.com';
 const DRY_RUN = process.argv.includes('--dry-run');
 
+// A manual `workflow_dispatch` run is a deliberate catch-up: send anything the state file
+// says has never gone out. That is the recovery path when a push-triggered run failed —
+// re-running the old job instead would check out an old commit and push from a detached
+// HEAD. `--only <slug>` narrows it to one post, so seven backed-up posts don't all land
+// on the agent at once.
+const MANUAL = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
+const onlyArg = process.argv.indexOf('--only');
+const ONLY = onlyArg !== -1 ? (process.argv[onlyArg + 1] || '').replace(/\.md$/, '') : null;
+
 // git always reports forward slashes; path.join on Windows does not. The state file is
 // keyed by path, so everything gets normalised or an already-handled post looks new —
 // which here means a stray email to an agent that can post publicly.
 const norm = (p) => p.split(path.sep).join('/');
 
+const allPostFiles = () =>
+  fs
+    .readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => norm(path.join(POSTS_DIR, f)));
+
 function getChangedPostFiles() {
+  // A manual run is an explicit catch-up, so the push diff is the wrong question — it
+  // would only ever surface the newest commit's post and leave a backlog stranded.
+  // Consider every post and let .syndicated.json decide what has actually gone out.
+  if (MANUAL) return allPostFiles();
+
   try {
     const before = process.env.GITHUB_EVENT_BEFORE;
     const range = before && !/^0+$/.test(before) ? `${before}..HEAD` : 'HEAD~1..HEAD';
@@ -42,10 +62,7 @@ function getChangedPostFiles() {
   // "scan everything" fallback would mail the agent about every post on the site the
   // first time an unrelated push touched the posts directory.
   if (process.env.GITHUB_ACTIONS) return [];
-  return fs
-    .readdirSync(POSTS_DIR)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => norm(path.join(POSTS_DIR, f)));
+  return allPostFiles();
 }
 
 function loadState() {
@@ -93,17 +110,25 @@ async function main() {
   const state = loadState();
   const alreadySent = new Set(state.synced);
 
-  const newFiles = files.filter((f) => !alreadySent.has(f));
+  let newFiles = files.filter((f) => !alreadySent.has(f));
+  if (ONLY) newFiles = newFiles.filter((f) => path.basename(f, '.md') === ONLY);
   if (newFiles.length === 0) {
-    console.log('No new posts to hand off.');
+    console.log(ONLY ? `Nothing outstanding matching "${ONLY}".` : 'No new posts to hand off.');
     return;
   }
+  console.log(`${newFiles.length} post(s) to hand off to ${TO}:`);
+  newFiles.forEach((f) => console.log(`  ${f}`));
 
   const { SMTP_HOST, SMTP_USER, SMTP_PASS } = process.env;
   let transport = null;
   if (!DRY_RUN) {
     if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-      console.error('SMTP_HOST, SMTP_USER and SMTP_PASS must all be set. Nothing sent.');
+      console.error(
+        'SMTP_HOST, SMTP_USER and SMTP_PASS must all be set. Nothing sent.\n' +
+          'Add them as repo secrets: Settings → Secrets and variables → Actions.\n' +
+          'For Gmail: SMTP_HOST=smtp.gmail.com, SMTP_USER=<the sending address>,\n' +
+          'SMTP_PASS=<a Google App Password, not the account password>.',
+      );
       process.exit(1);
     }
     transport = nodemailer.createTransport({
