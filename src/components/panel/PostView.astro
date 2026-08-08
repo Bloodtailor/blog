@@ -10,7 +10,14 @@ interface Props {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric',
+  // Frontmatter dates are bare YYYY-MM-DD, which coerce to UTC midnight. Without
+  // pinning the zone, a build west of UTC formats them a day early.
+  timeZone: 'UTC',
+});
 ---
 
 <article data-post-article style="width:100%;max-width:720px;padding-bottom:60px">

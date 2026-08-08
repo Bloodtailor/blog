@@ -119,7 +119,8 @@
   border-left: 3px solid var(--pc-line2);
   color: var(--pc-soft);
 }
-.pc-prose img { max-width: 100%; height: auto; display: block; border-radius: 8px; }
+.pc-prose img,
+.pc-prose video { max-width: 100%; height: auto; display: block; border-radius: 8px; }
 .pc-prose hr { border: 0; border-top: 1px solid var(--pc-line); margin: 34px 0; }
 .pc-prose table { width: 100%; border-collapse: collapse; margin: 0 0 20px; font-size: 15px; }
 .pc-prose th,

@@ -8,7 +8,14 @@ const posts = all.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || b.data.id.localeCompare(a.data.id),
 );
 
-const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric',
+  // Frontmatter dates are bare YYYY-MM-DD, which coerce to UTC midnight. Without
+  // pinning the zone, a build west of UTC formats them a day early.
+  timeZone: 'UTC',
+});
 const feedUrl = 'aaronorelup.com/rss.xml';
 ---
 
