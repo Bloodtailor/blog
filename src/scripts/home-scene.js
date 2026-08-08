@@ -272,6 +272,11 @@ export class HomeScene {
     const d = PANELUI.day, n = PANELUI.night;
     Object.keys(d).forEach(k => el.style.setProperty('--pc-' + k, mixRGB(d[k], n[k], m)));
     el.style.setProperty('--pc-shadow', m < 0.5 ? '0 30px 90px rgba(58,58,66,0.22)' : '0 34px 100px rgba(0,0,0,0.6)');
+    // Syntax highlighting can't be tweened: Shiki ships both themes as custom
+    // properties and CSS picks one off :root[data-mode]. Flip it at the same
+    // midpoint --pc-shadow uses, so code blocks turn with the rest of the room.
+    if (m < 0.5) document.documentElement.dataset.mode = 'day';
+    else delete document.documentElement.dataset.mode;
   }
 
   // nearly full screen, with a consistent margin on every side

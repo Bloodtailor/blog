@@ -39,8 +39,16 @@ function captureEndpoint() {
 export default defineConfig({
   site: 'https://aaronorelup.com',
   markdown: {
+    // Both themes, emitted as CSS custom properties rather than a baked-in
+    // background — panel.css picks one based on the day/night mode. A single
+    // theme here hardcodes `background-color` inline on <pre>, which beat the
+    // palette and left every code block white in night mode.
     shikiConfig: {
-      theme: 'github-light',
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+      defaultColor: false,
     },
   },
   vite: {
