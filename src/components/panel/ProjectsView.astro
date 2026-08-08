@@ -39,7 +39,7 @@ const shotBox = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cov
           </div>
           <div style="display:flex;flex-direction:column;gap:16px">
             <div style="min-height:210px;position:relative;border:1px solid var(--pc-line);background:var(--pc-tile);overflow:hidden;display:flex;align-items:flex-end;padding:14px;box-sizing:border-box">
-              {p.shot && <img src={p.shot} alt="" style={shotBox} />}
+              {p.shot && <img src={p.shot} alt="" loading="lazy" decoding="async" width="640" height="420" style={shotBox} />}
               <span style="position:relative;font-size:10.5px;letter-spacing:0.14em;color:var(--pc-quiet);text-transform:uppercase">{p.shotLabel ?? 'No screenshot yet'}</span>
             </div>
             <p style="margin:0;font-size:11.5px;line-height:1.7;color:var(--pc-quiet)">{p.runsOn}</p>
@@ -97,6 +97,15 @@ const shotBox = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cov
             ) : (
               <span style="font-size:13px;letter-spacing:0.06em;color:var(--pc-quiet)">Not public yet</span>
             )}
+            {p.repo && (
+              <a
+                href={p.repo}
+                target="_blank"
+                rel="noreferrer noopener"
+                class="pc-link-accent"
+                style="font-size:13px;letter-spacing:0.06em;color:var(--pc-accent);text-decoration:none"
+              >Read the source ↗</a>
+            )}
             {p.post && (
               <a
                 href={`/ledger/${p.post}/`}
@@ -108,7 +117,7 @@ const shotBox = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cov
           </div>
         </div>
         <div style="min-height:190px;position:relative;border:1px solid var(--pc-line);background:var(--pc-tile);overflow:hidden;display:flex;align-items:flex-end;padding:14px;box-sizing:border-box">
-          {p.shot && <img src={p.shot} alt="" style={shotBox} />}
+          {p.shot && <img src={p.shot} alt="" loading="lazy" decoding="async" width="640" height="420" style={shotBox} />}
           <span style="position:relative;font-size:10.5px;letter-spacing:0.14em;color:var(--pc-quiet);text-transform:uppercase">{p.shotLabel ?? 'No screenshot yet'}</span>
         </div>
       </article>

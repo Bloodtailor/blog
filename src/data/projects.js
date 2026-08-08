@@ -1,12 +1,15 @@
 // Projects, hand-maintained — carried over from the homepage design.
 // Add an object to add a project. `shot` is a screenshot path, or null: the card is
 // designed for the missing state. `tier: "flagship"` puts it in the long-form section.
+//
+// Flagships run on your own machine, so their `href` IS the repo. The browser-playable
+// ones put the play link in `href` and the source in `repo`.
 export const PROJECTS = [
   {
     name: 'Wordhord',
     tagline: 'a local-first AI language-learning platform',
     blurb: 'A per-word, per-skill, evidence-based map of what you actually know — and the classic techniques (graded reading, shadowing, cloze, Pimsleur-style audio) generated fresh against it, about things you actually care about. Japanese is fully built; Korean, German and Spanish generate their own materials on first start.',
-    href: null,                      // ← paste the Wordhord repo URL here
+    href: 'https://github.com/Bloodtailor/wordhord',
     external: true,
     year: 2026,
     status: 'building',
@@ -18,7 +21,8 @@ export const PROJECTS = [
       ['Honest about failure', 'Where a capability failed its audit — pitch accent at 60% cross-model agreement against a 95% bar — the room says so instead of shipping unverified data.']
     ],
     runsOn: 'Runs on your machine · your keys · no cloud, no account, no telemetry',
-    shot: null,
+    shot: '/media/wordhord/card.webp',
+    shotLabel: 'The chat, mid-lesson',
     post: null
   },
   {
@@ -37,7 +41,8 @@ export const PROJECTS = [
       ['You can just say things', 'Type a free-text action in battle and the referee decides whether it is possible. Recruitment is negotiation: monsters join by their own will, or talk, plead, and flee on their own turns.']
     ],
     runsOn: 'Windows 10/11 · one double-click setup · bring a DeepSeek key',
-    shot: null,
+    shot: '/media/llm-monster-hunter/card.webp',
+    shotLabel: 'Monsters painted at play time',
     post: null
   },
   {
@@ -49,6 +54,7 @@ export const PROJECTS = [
     year: 2026,
     status: 'playable',
     tags: ['gamedev', 'agents', 'gauntlet loop', 'content editor'],
+    repo: 'https://github.com/Bloodtailor/armies-of-gielinor',
     post: 'armies-of-gielinor-gauntlet',
     shot: '/media/armies-of-gielinor/card.webp',
     shotLabel: 'The recreation, mid-match'
@@ -62,8 +68,10 @@ export const PROJECTS = [
     year: 2026,
     status: 'proof of concept',
     tags: ['Three.js', 'gamedev', 'ElevenLabs', 'level editor'],
+    repo: 'https://github.com/Bloodtailor/blackwater',
     post: 'blackwater-weekend',
-    shot: null
+    shot: '/media/blackwater/card.webp',
+    shotLabel: 'Descending the flooded site'
   },
   {
     name: 'Grind & Grimoire',
@@ -74,7 +82,9 @@ export const PROJECTS = [
     year: 2026,
     status: 'finished',
     tags: ['Three.js', 'one-shot', 'ElevenLabs'],
+    repo: 'https://github.com/Bloodtailor/Grind-Grimoire',
     post: 'grind-and-grimoire',
-    shot: null
+    shot: '/media/grind-and-grimoire/card.webp',
+    shotLabel: 'The boardwalk, before the open mic'
   }
 ];
