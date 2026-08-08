@@ -80,8 +80,8 @@ and why the [Armies of Gielinor](/ledger/armies-of-gielinor-gauntlet/) run has r
 
 **How I work changed shape, too.** I used to sit there prompting continuously, watching
 every step, going back and forth. Now I burst: fire off hours of work, walk away, and spend
-the next day reviewing what came back and planning the next burst. Continuous versus
-bursting is its own post and it's coming.
+the next day reviewing what came back and planning the next burst.
+[Continuous versus bursting](/ledger/stopped-keeping-agents-fed/) is its own post.
 
 ## Is the trade worth it?
 
