@@ -122,6 +122,10 @@
 .pc-prose pre.astro-code span { color: var(--shiki-dark); }
 :root[data-mode='day'] .pc-prose pre.astro-code,
 :root[data-mode='day'] .pc-prose pre.astro-code span { color: var(--shiki-light); }
+/* By day the block goes plain white rather than the panel's paper tone: that's
+   the background github-light's token colours were picked against, and it reads
+   as an editor pane sitting on the page instead of part of it. */
+:root[data-mode='day'] .pc-prose pre { background: #fff; }
 .pc-prose blockquote {
   margin: 0 0 20px;
   padding-left: 18px;
