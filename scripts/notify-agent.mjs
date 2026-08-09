@@ -42,10 +42,12 @@ const allPostFiles = () =>
     .map((f) => norm(path.join(POSTS_DIR, f)));
 
 function getChangedPostFiles() {
-  // A manual run is an explicit catch-up, so the push diff is the wrong question — it
-  // would only ever surface the newest commit's post and leave a backlog stranded.
-  // Consider every post and let .syndicated.json decide what has actually gone out.
-  if (MANUAL) return allPostFiles();
+  // A manual run, or an explicit --only, is a deliberate request rather than a reaction
+  // to a push — so the push diff is the wrong question. It would only ever surface the
+  // newest commit's post and leave a backlog stranded, and `--only <slug>` run from a
+  // laptop would find nothing at all. Consider every post and let .syndicated.json
+  // decide what has actually gone out.
+  if (MANUAL || ONLY) return allPostFiles();
 
   try {
     const before = process.env.GITHUB_EVENT_BEFORE;
