@@ -52,17 +52,22 @@ function getChangedPostFiles() {
     const range = before && !/^0+$/.test(before) ? `${before}..HEAD` : 'HEAD~1..HEAD';
     const out = execSync(`git diff --name-only --diff-filter=A ${range} -- ${POSTS_DIR}`, {
       encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
-    const files = out.split('\n').map((f) => f.trim()).filter(Boolean);
-    if (files.length > 0) return files;
-  } catch {
-    // fall through
+    // The diff ran. An empty result is a real answer: this push added no posts.
+    return out.split('\n').map((f) => f.trim()).filter(Boolean);
+  } catch (e) {
+    // The diff could NOT run — nearly always because the "before" commit is missing from
+    // a shallow clone, which happens on any push of more than one commit. Returning []
+    // here reported success and silently dropped seven posts. Fall back to the full list
+    // and let .syndicated.json decide; it already knows what has gone out, so the worst
+    // case is a catch-up, not a duplicate.
+    console.warn(
+      `Could not diff for added posts (${String(e.message).split('\n')[0]}).\n` +
+        'Falling back to everything not yet recorded in ' + STATE_FILE + '.',
+    );
+    return allPostFiles();
   }
-  // No post was added in this push. In CI that means there is nothing to do — the old
-  // "scan everything" fallback would mail the agent about every post on the site the
-  // first time an unrelated push touched the posts directory.
-  if (process.env.GITHUB_ACTIONS) return [];
-  return allPostFiles();
 }
 
 function loadState() {
