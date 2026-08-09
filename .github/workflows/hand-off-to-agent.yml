@@ -5,7 +5,7 @@
 # Can also be run by hand ("Run workflow") to catch up anything a failed run missed.
 # A manual run sends every post not already recorded in .syndicated.json, or just one
 # if you give it a slug.
-name: Hand new posts to the agent
+name: Hand posts to the agent
 
 on:
   push:
