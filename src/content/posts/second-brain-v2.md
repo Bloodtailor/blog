@@ -7,7 +7,7 @@ status: "shipped"
 tags: ["second-brain", "agents", "notion", "claude-code"]
 ---
 
-*Research: 2026-08-14/15, ~130 agents, claims adversarially verified (3 refutation votes each; 11 confirmed / 4 contested / 1 refuted). Migration: 2026-08-15. Reproduction ledger, not a tutorial. Point your agent at this post and [THE-SECOND-BRAIN-BUILDERS](/research/second-brain-builders.md) (raw markdown on purpose — hand the link to your agent) for a head start — the research is pre-synthesized.*
+*Research: 2026-08-14/15, ~130 agents, claims adversarially verified (3 refutation votes each; 11 confirmed / 4 contested / 1 refuted). Migration: 2026-08-15. Reproduction ledger, not a tutorial. Point your agent at this post and [The Second Brain Builders (RE-001)](/research/second-brain-builders/) (a raw-markdown link for your agent sits at the top of that page) for a head start — the research is pre-synthesized.*
 
 I've seen a lot of people building second brains lately. A second brain stores what's in your head somewhere agents can use it. I had Fable 5 build mine in one shot, with poor results. I tried again — research first, then rules, then migration. Here's what I got.
 
@@ -41,7 +41,7 @@ The one-shot build produced 114 pages / ~130k words in 13 days. Genuinely good: 
 
 ## What others have done
 
-Fifteen named builders profiled (2026-08-15, strict no-embellishment rule — absences reported as absences). Full architectures and lessons: [THE-SECOND-BRAIN-BUILDERS](/research/second-brain-builders.md) (raw markdown on purpose — hand the link to your agent).
+Fifteen named builders profiled (2026-08-15, strict no-embellishment rule — absences reported as absences). Full architectures and lessons: [The Second Brain Builders (RE-001)](/research/second-brain-builders/) (a raw-markdown link for your agent sits at the top of that page).
 
 **Big tech:** Karpathy (one plain-text note; separately the LLM Wiki pattern — immutable sources, LLM-owned wiki, co-evolved schema, ingest/query/lint). Cherny (CLAUDE.md as living contract; "auto-dream" consolidation subagent). Willison (blog + TILs + GitHub issues as public memory; "current vs temporal" docs). Wolfram (metasearch over 30 years of everything). Johnson (1.3M words of highlights in 15 consolidated files behind NotebookLM).
 

@@ -15,4 +15,21 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const research = defineCollection({
+  type: 'content',
+  schema: z.object({
+    // Sequential research id, e.g. "RE-001" — same convention as the ledger's AO-###,
+    // prefix from the root's first two letters. First of its kind gets 001.
+    id: z.string(),
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+    // One line on how the document was produced — research docs carry their provenance.
+    provenance: z.string().optional(),
+    // Path to the raw markdown copy served for agents, if one is hosted.
+    raw: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, research };

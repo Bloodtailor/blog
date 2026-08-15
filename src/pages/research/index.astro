@@ -1,0 +1,49 @@
+---
+// The research shelf: agent-era research documents, sequential RE-### ids.
+// Same list chrome as the ledger; different root, different id prefix.
+import { getCollection } from 'astro:content';
+import PanelPage from '../../layouts/PanelPage.astro';
+
+const all = await getCollection('research');
+const docs = all.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || b.data.id.localeCompare(a.data.id),
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+---
+<PanelPage
+  title="Research — Aaron Orelup"
+  description="Standalone research documents — deeper and drier than ledger entries, written to be handed to an agent as much as read by a person."
+  active="ledger"
+>
+  <div style="width:100%;max-width:1140px">
+    <h1 style="margin:0 0 10px;font-family:'Zen Maru Gothic',sans-serif;font-size:clamp(30px,4vw,44px);line-height:1.1;font-weight:700;color:var(--pc-head);letter-spacing:-0.015em">Research</h1>
+    <p style="margin:0 0 40px;font-size:14px;line-height:1.75;color:var(--pc-quiet);max-width:680px">Standalone research documents — deeper and drier than ledger entries, written to be handed to an agent as much as read by a person. Each carries its provenance and a raw-markdown link.</p>
+
+    <div style="display:flex;flex-direction:column">
+      {docs.map((doc) => (
+        <a
+          href={`/research/${doc.slug}/`}
+          class="pc-row"
+          style="display:grid;grid-template-columns:120px 1fr;gap:0 26px;padding:24px 14px;margin:0 -14px;border-top:1px solid var(--pc-line);border-radius:10px;text-decoration:none;cursor:pointer"
+        >
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.7;color:var(--pc-accent)">
+            {doc.data.id}<br /><span style="color:var(--pc-quiet)">{dateFmt.format(doc.data.date)}</span>
+          </div>
+          <div>
+            <h2 style="margin:0 0 8px;font-family:'Zen Maru Gothic',sans-serif;font-size:20px;font-weight:700;color:var(--pc-strong);letter-spacing:-0.01em">{doc.data.title}</h2>
+            <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15.5px;line-height:1.6;color:var(--pc-body);max-width:600px;text-wrap:pretty">{doc.data.summary}</p>
+          </div>
+        </a>
+      ))}
+      {docs.length === 0 && (
+        <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:16px;color:var(--pc-quiet)">No documents filed yet.</p>
+      )}
+    </div>
+  </div>
+</PanelPage>

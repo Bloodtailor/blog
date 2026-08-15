@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import PanelPage from '../../layouts/PanelPage.astro';
+import ResearchView from '../../components/panel/ResearchView.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('research');
+  return docs.map((doc) => ({ params: { slug: doc.slug }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+---
+<PanelPage title={`${doc.data.title} — Aaron Orelup`} description={doc.data.summary} active="ledger">
+  <ResearchView doc={doc} />
+</PanelPage>
