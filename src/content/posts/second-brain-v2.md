@@ -45,11 +45,11 @@ Fifteen named builders profiled (2026-08-15, strict no-embellishment rule — ab
 
 **Big tech:** Karpathy (one plain-text note; separately the LLM Wiki pattern — immutable sources, LLM-owned wiki, co-evolved schema, ingest/query/lint). Cherny (CLAUDE.md as living contract; "auto-dream" consolidation subagent). Willison (blog + TILs + GitHub issues as public memory; "current vs temporal" docs). Wolfram (metasearch over 30 years of everything). Johnson (1.3M words of highlights in 15 consolidated files behind NotebookLM).
 
-**Creators:** Wes Roth — confirmed negative: no documented system; AI search summaries fabricate one for him (traced to a misattributed video). Forte (PARA by actionability; "canonical home" per data type; pivoting PKM → Personal Context Management). Eliason (boom-era Roam teacher; now argues most note-hoarding is dead). Poulin (loose PARA in Notion; areas as pages over filtered database views). Milo (Maps of Content = hub pages).
+**Creators:** Wes Roth — a full Obsidian + Claude Code build of Karpathy's LLM Wiki pattern (video + written guide, July 2026). *Correction: this research originally published him as a confirmed negative — the profile now carries the correction and the anatomy of that error.* Forte (PARA by actionability; "canonical home" per data type; pivoting PKM → Personal Context Management). Eliason (boom-era Roam teacher; now argues most note-hoarding is dead). Poulin (loose PARA in Notion; areas as pages over filtered database views). Milo (Maps of Content = hub pages).
 
 **Practitioners:** Reitz (467-note vault run by Claude Code; ~200-line CLAUDE.md "API contract" whose first section is What NOT To Do). Brier (~1,500 notes; agent launched from vault root so it sees everything). Michalski (572k thoughts in TheBrain since 1997; no folders; no-orphan rule). karlicoss (export everything raw and immutable; normalize at read time; his data outlived the services). Ghelbur (closest analogue: index.md + log.md + 120-token always-loaded facts file; ingest rewrites, never appends; enforced inbox drain; measured 77% recall on paraphrased queries — keep semantic search in the loop).
 
-Headline: only 5 of 15 document an agent-facing system at all. The design space is young; the real precedents mostly agree.
+Headline: 6 of 15 document an agent-facing system (originally published as 5 — the Wes Roth miss, corrected). The design space is young; the real precedents mostly agree.
 
 ## The bill (proof of work, measured from transcripts)
 
