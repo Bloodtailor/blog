@@ -750,12 +750,22 @@ export class HomeScene {
     if (this.scene) { this.scene.traverse(o => { if (o.geometry) o.geometry.dispose(); }); this.scene = null; }
   }
 
+  // The scene is fill-bound, not draw-call bound: cost tracks the pixel count
+  // almost exactly (0.27ms at 0.9MP, 1.2ms at 3.7MP on a desktop GPU). Capping
+  // at 2 meant a HiDPI laptop shaded 4x the pixels of a 1x screen for a scene
+  // whose edges are already MSAA'd — on integrated graphics that is the whole
+  // difference between smooth and sludge. 1.5 keeps the crispness and drops
+  // ~44% of the fragment work.
+  static pixelRatio() {
+    return Math.min(window.devicePixelRatio || 1, 1.5);
+  }
+
   /* ---------- renderer ---------- */
 
   initRenderer() {
     const T = this.T;
     this.renderer = new T.WebGLRenderer({ canvas: this.canvas, antialias: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(HomeScene.pixelRatio());
     this.renderer.setClearColor(P.cream, 1);
     this.scene = new T.Scene();
     this.camera = new T.PerspectiveCamera(46, 1, 0.1, 400);
@@ -764,7 +774,7 @@ export class HomeScene {
   resize() {
     if (!this.renderer) return;
     const w = window.innerWidth, h = window.innerHeight;
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(HomeScene.pixelRatio());
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     this.portrait = (w / h) < 0.9;
