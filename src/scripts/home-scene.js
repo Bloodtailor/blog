@@ -88,6 +88,27 @@ const PANEL_TRANS = 'left 560ms cubic-bezier(.4,0,.2,1),top 560ms cubic-bezier(.
 // The scene and the overlay panel it opens. Ported from the Claude Design artifact:
 // the design ran this as a React component, but nothing here needs React — the panel's
 // content is server-rendered by Astro, so the class only ever shows and hides it.
+// The scene is cheap in draw calls (25) and triangles (37k) but pays per pixel,
+// per light, and per frame. Those are the three dials, in the order it is worth
+// giving them up: petals decide whether we redraw *at all* when the visitor is
+// still, lamps decide how many lights every fragment shader loops over, and dpr
+// decides how many fragments there are. Below the bottom rung the scene stops
+// being worth its cost and the page falls back to the flat document.
+const QUALITY = [
+  { name: 'low',    dpr: 1.0,  petals: 0,    lamps: 0 },
+  { name: 'medium', dpr: 1.25, petals: 0.45, lamps: 3 },
+  { name: 'high',   dpr: 1.5,  petals: 1,    lamps: 99 },
+];
+
+// The day and night rigs used to be six lights cross-faded against each other,
+// all six resident and all six evaluated by every fragment shader even when
+// half of them sat at zero intensity. They are one rig now, lerped in place.
+const RIG = {
+  amb:  { day: { c: 0xFFFFFF, i: 1.5 },  night: { c: 0xA8B4E4, i: 0.34 } },
+  hemi: { day: { c: 0xFFF6EA, g: 0xF2DFC6, i: 1.1 }, night: { c: 0x8C9FDC, g: 0x232839, i: 0.42 } },
+  dir:  { day: { c: 0xFFF4E4, i: 0.35, p: [6, 12, 9] }, night: { c: 0xD8E2FF, i: 0.3, p: [-7, 14, 8] } },
+};
+
 export class HomeScene {
   constructor(opts) {
     this.opts = Object.assign(
@@ -195,6 +216,118 @@ export class HomeScene {
   nightLamp(light) {
     light.userData.base = light.intensity;
     (this.nightLights = this.nightLights || []).push(light);
+    (this.lampLights = this.lampLights || []).push(light);
+  }
+
+  // Cross-fading two lights is just adding their contributions, so one light can
+  // stand in for the pair exactly: sum the (intensity x colour) vectors and split
+  // the result back into an intensity and a unit colour. Ambient and hemisphere
+  // are exact at every value of m. The key light is exact at m=0 and m=1 and
+  // merely swings across the sky in between, which is the only place the two
+  // directions could ever have disagreed.
+  applyRig(m) {
+    if (!this.rig) return;
+    const T = this.T, C = (hex) => new T.Color(hex);
+    const split = (light, vecs) => {
+      let i = 0;
+      for (const v of vecs) i = Math.max(i, v.r, v.g, v.b);
+      light.intensity = i;
+      const inv = i > 1e-6 ? 1 / i : 0;
+      return inv;
+    };
+    const mixVec = (dayHex, dayI, nightHex, nightI) => {
+      const a = C(dayHex).multiplyScalar(dayI * (1 - m));
+      const b = C(nightHex).multiplyScalar(nightI * m);
+      return a.add(b);
+    };
+
+    const av = mixVec(RIG.amb.day.c, RIG.amb.day.i, RIG.amb.night.c, RIG.amb.night.i);
+    let inv = split(this.rig.amb, [av]);
+    this.rig.amb.color.setRGB(av.r * inv, av.g * inv, av.b * inv);
+
+    const hs = mixVec(RIG.hemi.day.c, RIG.hemi.day.i, RIG.hemi.night.c, RIG.hemi.night.i);
+    const hg = mixVec(RIG.hemi.day.g, RIG.hemi.day.i, RIG.hemi.night.g, RIG.hemi.night.i);
+    inv = split(this.rig.hemi, [hs, hg]);
+    this.rig.hemi.color.setRGB(hs.r * inv, hs.g * inv, hs.b * inv);
+    this.rig.hemi.groundColor.setRGB(hg.r * inv, hg.g * inv, hg.b * inv);
+
+    const dv = mixVec(RIG.dir.day.c, RIG.dir.day.i, RIG.dir.night.c, RIG.dir.night.i);
+    inv = split(this.rig.dir, [dv]);
+    this.rig.dir.color.setRGB(dv.r * inv, dv.g * inv, dv.b * inv);
+    const dp = RIG.dir.day.p, np = RIG.dir.night.p;
+    this.rig.dir.position.set(
+      dp[0] + (np[0] - dp[0]) * m,
+      dp[1] + (np[1] - dp[1]) * m,
+      dp[2] + (np[2] - dp[2]) * m,
+    );
+  }
+
+  // Adding or removing a light recompiles every material, so this only touches
+  // the graph when the wanted count actually changes — never per frame.
+  syncLamps() {
+    const pool = this.lampLights || [];
+    if (!pool.length) return;
+    const budget = QUALITY[this.tier == null ? QUALITY.length - 1 : this.tier].lamps;
+    // in daylight every lamp sits at zero intensity, so pulling them is free
+    const want = (this.mix || 0) > 0.02 ? Math.min(budget, pool.length) : 0;
+    if (want === this._lampsOn) return;
+    this._lampsOn = want;
+    pool.forEach((l, i) => {
+      const on = i < want;
+      if (on && !l.parent && l.userData.home) l.userData.home.add(l);
+      else if (!on && l.parent) l.parent.remove(l);
+    });
+  }
+
+  setPetalDensity(f) {
+    const max = this.petalMax || 0;
+    const n = Math.max(0, Math.round(max * f));
+    this.petalCount = n;
+    if (this.petalMesh) { this.petalMesh.count = n; this.petalMesh.visible = n > 0; }
+  }
+
+  pixelRatio() {
+    const cap = QUALITY[this.tier == null ? QUALITY.length - 1 : this.tier].dpr;
+    return Math.min(window.devicePixelRatio || 1, cap);
+  }
+
+  applyTier() {
+    const q = QUALITY[this.tier];
+    this.quality = q.name;
+    if (this.renderer) {
+      this.renderer.setPixelRatio(this.pixelRatio());
+      this.renderer.setSize(window.innerWidth, window.innerHeight, false);
+    }
+    this.setPetalDensity(q.petals);
+    this._lampsOn = undefined;      // force syncLamps to re-evaluate the budget
+    this.syncLamps();
+    this.lastRendered = -1;
+  }
+
+  // Only frames that actually drew are sampled: at the bottom tier the petals are
+  // gone, so a still visitor renders nothing and the rAF gap would otherwise read
+  // as a healthy 16ms forever. What matters is how fast the scene moves *when it
+  // is moving*, which is exactly when the visitor is looking at it.
+  sampleQuality(nowMs) {
+    if (this._pinned) return;
+    const prev = this._lastDrawTs;
+    this._lastDrawTs = nowMs;
+    if (!prev || nowMs - prev > 200) return;        // a gap means it was idle, not slow
+    const s = (this._fts = this._fts || []);
+    s.push(nowMs - prev);
+    if (s.length < 45) return;
+    const med = s.slice().sort((a, b) => a - b)[s.length >> 1];
+    s.length = 0;
+    if (med > 40 && this.tier === 0) { this.bail('below 25fps at the lowest tier'); return; }
+    if (med > 22 && this.tier > 0) {
+      this._tierFloor = Math.min(this._tierFloor == null ? Infinity : this._tierFloor, this.tier);
+      this.tier--;
+      this.applyTier();
+    } else if (med < 13 && this.tier < QUALITY.length - 1
+               && this.tier + 1 < (this._tierFloor == null ? Infinity : this._tierFloor)) {
+      this.tier++;
+      this.applyTier();
+    }
   }
 
   // the whole look is one number: 0 = midday, 1 = night. Everything reads off it.
@@ -211,6 +344,8 @@ export class HomeScene {
     this.updateSky();
     (this.dayLights || []).forEach(l => { l.intensity = l.userData.base * (1 - m); });
     (this.nightLights || []).forEach(l => { l.intensity = l.userData.base * m; });
+    this.applyRig(m);
+    this.syncLamps();
     this.applyMode(m);
     this.lastRendered = -1;                 // force the next frame to redraw
   }
@@ -667,6 +802,22 @@ export class HomeScene {
     if (!this.canvas || !this.wrap || !this.main) return;
     if (this.statsEl) this.statsEl.style.display = this.opts.showStats ? 'block' : 'none';
 
+    // ?stats shows the live readout, ?tier=low|medium|high pins a rung — both
+    // exist so a slow machine can be diagnosed on the machine that is slow.
+    const q = new URLSearchParams(location.search);
+    if (q.has('stats')) {
+      this.opts.showStats = true;
+      // the display was already set from opts a few lines up, before we read the URL
+      if (this.statsEl) this.statsEl.style.display = 'block';
+    }
+    this.tier = QUALITY.length - 1;
+    const pin = q.get('tier');
+    if (pin) {
+      const i = QUALITY.findIndex(t => t.name === pin);
+      if (i >= 0) { this.tier = i; this._pinned = true; }
+    }
+    this.quality = QUALITY[this.tier].name;
+
     this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!this.opts.forceReducedMotion;
     this.night = this.resolveNight();
     this.mix = this.night ? 1 : 0;
@@ -681,6 +832,7 @@ export class HomeScene {
     this.initRenderer();
     this.buildWorld();
     this.buildCurves();
+    this.applyTier();
     this.mode = 'idle'; this.stopIdx = 0; this.nudge = 0;
     this.onResize = () => this.resize();
     window.addEventListener('resize', this.onResize);
@@ -720,6 +872,15 @@ export class HomeScene {
       this.staging = null;
     }
     this.disableStage();
+    // stop the loop and hand the GPU back — a bail that keeps rendering into a
+    // hidden canvas is the one thing worse than the scene we just gave up on
+    this.alive = false;
+    if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; }
+    if (this.onResize) { window.removeEventListener('resize', this.onResize); this.onResize = null; }
+    if (this.renderer) {
+      try { this.renderer.dispose(); } catch (e) { /* already gone */ }
+      this.renderer = null;
+    }
     if (this.canvas) this.canvas.style.display = 'none';
     this.sections.forEach(s => {
       s.style.opacity = '1'; s.style.transform = 'none'; s.style.pointerEvents = 'auto';
@@ -750,22 +911,12 @@ export class HomeScene {
     if (this.scene) { this.scene.traverse(o => { if (o.geometry) o.geometry.dispose(); }); this.scene = null; }
   }
 
-  // The scene is fill-bound, not draw-call bound: cost tracks the pixel count
-  // almost exactly (0.27ms at 0.9MP, 1.2ms at 3.7MP on a desktop GPU). Capping
-  // at 2 meant a HiDPI laptop shaded 4x the pixels of a 1x screen for a scene
-  // whose edges are already MSAA'd — on integrated graphics that is the whole
-  // difference between smooth and sludge. 1.5 keeps the crispness and drops
-  // ~44% of the fragment work.
-  static pixelRatio() {
-    return Math.min(window.devicePixelRatio || 1, 1.5);
-  }
-
   /* ---------- renderer ---------- */
 
   initRenderer() {
     const T = this.T;
     this.renderer = new T.WebGLRenderer({ canvas: this.canvas, antialias: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(HomeScene.pixelRatio());
+    this.renderer.setPixelRatio(this.pixelRatio());
     this.renderer.setClearColor(P.cream, 1);
     this.scene = new T.Scene();
     this.camera = new T.PerspectiveCamera(46, 1, 0.1, 400);
@@ -774,7 +925,7 @@ export class HomeScene {
   resize() {
     if (!this.renderer) return;
     const w = window.innerWidth, h = window.innerHeight;
-    this.renderer.setPixelRatio(HomeScene.pixelRatio());
+    this.renderer.setPixelRatio(this.pixelRatio());
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     this.portrait = (w / h) < 0.9;
@@ -900,23 +1051,23 @@ export class HomeScene {
     S.add(new T.Mesh(skyGeo, new T.MeshBasicMaterial({ vertexColors: true, side: T.BackSide, fog: false })));
     S.add(this.buildClouds());
 
-    // both rigs live in the scene at once; the time-lapse cross-fades their intensities
-    this.dayLights = []; this.nightLights = [];
-    const rig = (list, light, base, pos) => {
-      light.userData.base = base;
-      if (pos) light.position.set(pos[0], pos[1], pos[2]);
-      list.push(light); S.add(light);
-      return light;
+    // one rig, lerped between the day and night values by applyRig(). Flat,
+    // bright, illustrated: mostly ambient with a soft key so pastels stay pastel.
+    this.dayLights = []; this.nightLights = []; this.lampLights = [];
+    this.rig = {
+      amb: new T.AmbientLight(0xFFFFFF, 1.5),
+      hemi: new T.HemisphereLight(0xFFF6EA, 0xF2DFC6, 1.1),
+      dir: new T.DirectionalLight(0xFFF4E4, 0.35),
     };
-    // flat, bright, illustrated: mostly ambient with a soft key so pastels stay pastel
-    rig(this.dayLights, new T.AmbientLight(0xFFFFFF), 1.5);
-    rig(this.dayLights, new T.HemisphereLight(0xFFF6EA, 0xF2DFC6), 1.1);
-    rig(this.dayLights, new T.DirectionalLight(0xFFF4E4), 0.35, [6, 12, 9]);
-    // moon key + cool fill; the lamps themselves are added by buildNightLamps
-    rig(this.nightLights, new T.AmbientLight(0xA8B4E4), 0.34);
-    rig(this.nightLights, new T.HemisphereLight(0x8C9FDC, 0x232839), 0.42);
-    rig(this.nightLights, new T.DirectionalLight(0xD8E2FF), 0.3, [-7, 14, 8]);
+    this.rig.dir.position.set(6, 12, 9);
+    S.add(this.rig.amb, this.rig.hemi, this.rig.dir);
+    // the lamps themselves are added by buildNightLamps
     S.add(this.buildNightLamps());
+    // remember where each lamp light belongs so the ladder can pull it out of
+    // the graph entirely — three bakes light *counts* into every shader, so a
+    // zero-intensity light still costs the same as a lit one.
+    this.lampLights.forEach(l => { l.userData.home = l.parent; });
+    this.applyRig(this.mix || 0);
 
     // ground
     S.add(part(new T.CircleGeometry(70, 40), M.grass, [0, -0.02, 4], [-Math.PI / 2, 0, 0], 0));
@@ -1482,12 +1633,12 @@ export class HomeScene {
   buildPetals() {
     const T = this.T;
     const small = window.innerWidth < 640;
-    const density = 1;
-    this.petalCount = Math.round((small ? 70 : 240) * density);
+    this.petalMax = small ? 70 : 240;
+    this.petalCount = this.petalMax;
     const geo = new T.CircleGeometry(0.05, 5);
     const petalMat = new T.MeshBasicMaterial({ color: P.petal, side: T.DoubleSide });
     this.reg.push({ mat: petalMat, key: 'petal', prop: 'color' });
-    const mesh = new T.InstancedMesh(geo, petalMat, Math.max(1, this.petalCount));
+    const mesh = new T.InstancedMesh(geo, petalMat, Math.max(1, this.petalMax));
     mesh.instanceMatrix.setUsage(T.DynamicDrawUsage);
     mesh.frustumCulled = false;
     this.petalSeeds = [];
@@ -1530,6 +1681,9 @@ export class HomeScene {
     body.style.overflow = 'hidden';
     this.main.style.cssText = 'position:fixed;inset:0;margin:0;z-index:1;display:block';
     this.cards.forEach(c => {
+      // remember the document-flow styling; disableStage() has to put it back or
+      // the flat fallback stacks every section on top of the first one
+      if (c.el._stage0 === undefined) c.el._stage0 = c.el.getAttribute('style');
       c.el.style.position = 'absolute';
       c.el.style.inset = '0';
       c.el.style.minHeight = '0';
@@ -1546,6 +1700,13 @@ export class HomeScene {
     document.documentElement.style.overflow = this._restore.h;
     document.body.style.overflow = this._restore.b;
     if (this._restore.m) this.main.setAttribute('style', this._restore.m);
+    this.cards.forEach(c => {
+      if (c.el._stage0 === undefined) return;
+      if (c.el._stage0 === null) c.el.removeAttribute('style');
+      else c.el.setAttribute('style', c.el._stage0);
+      c.el._stage0 = undefined;
+      c.el._o = c.el._s = undefined;     // cardState's cache is now stale
+    });
     if (this.spacer) this.spacer.style.display = '';
     if (this.rail) this.rail.style.display = 'none';
     this._restore = null;
@@ -1968,6 +2129,7 @@ export class HomeScene {
 
     if (petalsLive) this.updatePetals(ts / 1000);
     this.renderer.render(this.scene, this.camera);
+    this.sampleQuality(ts);
     if (this.opts.showStats) this.writeStats({ i: Math.max(0, Math.min(last, Math.round(progress))) });
   }
 
@@ -1998,7 +2160,8 @@ export class HomeScene {
       '\ntris      ' + (info.triangles / 1000).toFixed(1) + 'k' +
       '\nrAF gap   ' + this._ft.toFixed(1) + ' ms' +
       '\npetals    ' + this.petalCount +
-      '\ndpr       ' + this.renderer.getPixelRatio();
+      '\ndpr       ' + this.renderer.getPixelRatio() +
+      '\ntier      ' + this.quality + (this._pinned ? ' (pinned)' : '');
   }
 
 }
