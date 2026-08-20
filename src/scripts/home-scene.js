@@ -95,6 +95,11 @@ const PANEL_TRANS = 'left 560ms cubic-bezier(.4,0,.2,1),top 560ms cubic-bezier(.
 // decides how many fragments there are. Below the bottom rung the scene stops
 // being worth its cost and the page falls back to the flat document.
 const QUALITY = [
+  // 'static' keeps the tea house on screen but stops animating it: the page
+  // scrolls like an ordinary document and the scene cuts to the frame for
+  // whichever section you are next to. Losing the ride is a far smaller loss
+  // than losing the art, so this rung comes before giving up altogether.
+  { name: 'static', dpr: 1.0,  petals: 0,    lamps: 0, reduced: true },
   { name: 'low',    dpr: 1.0,  petals: 0,    lamps: 0 },
   { name: 'medium', dpr: 1.25, petals: 0.45, lamps: 3 },
   { name: 'high',   dpr: 1.5,  petals: 1,    lamps: 99 },
@@ -301,7 +306,27 @@ export class HomeScene {
     this.setPetalDensity(q.petals);
     this._lampsOn = undefined;      // force syncLamps to re-evaluate the budget
     this.syncLamps();
+    if (q.reduced && !this.reduced) this.enterReduced();
     this.lastRendered = -1;
+  }
+
+  // Hand the page back to the browser: native scrolling, every section in flow
+  // and fully visible, no per-frame card cross-fade. The canvas stays, and the
+  // frame loop keeps cutting it to whichever section you are beside.
+  enterReduced() {
+    this.reduced = true;
+    this.unbindInput();
+    this.disableStage();
+    this.cards.forEach(c => this.cardState(c.el, 1, 0, 0));
+    this.measureCards();
+    this.lastProgress = undefined;
+  }
+
+  // Reduced mode used to read getBoundingClientRect for every card on every
+  // frame, which is a forced layout per card per frame even when nothing moved.
+  // The offsets only change on resize, so they are cached here instead.
+  measureCards() {
+    this._cardTops = this.cards.map(c => c.el.getBoundingClientRect().top + window.scrollY);
   }
 
   // Only frames that actually drew are sampled: at the bottom tier the petals are
@@ -318,7 +343,7 @@ export class HomeScene {
     if (s.length < 45) return;
     const med = s.slice().sort((a, b) => a - b)[s.length >> 1];
     s.length = 0;
-    if (med > 40 && this.tier === 0) { this.bail('below 25fps at the lowest tier'); return; }
+    if (med > 45 && this.tier === 0) { this.bail('below 22fps even as a static frame'); return; }
     if (med > 22 && this.tier > 0) {
       this._tierFloor = Math.min(this._tierFloor == null ? Infinity : this._tierFloor, this.tier);
       this.tier--;
@@ -328,6 +353,92 @@ export class HomeScene {
       this.tier++;
       this.applyTier();
     }
+  }
+
+  // ?diag — measure this machine rather than guess at it. Drives the camera along
+  // the real curve at each rung and reports the frame pacing the visitor would
+  // actually get, plus what is doing the drawing. A scene this small running slowly
+  // usually means it is not being drawn by a GPU at all, and no amount of tuning
+  // the scene can fix that, so the renderer string is the first thing reported.
+  async runDiagnostic() {
+    const lines = [];
+    const say = (k, v) => lines.push(String(k).padEnd(12) + v);
+
+    let vendor = 'unknown', device = 'unknown';
+    const gl = this.renderer && this.renderer.getContext();
+    if (gl) {
+      const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      if (dbg) {
+        vendor = gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) || vendor;
+        device = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || device;
+      }
+    }
+    const software = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(device);
+
+    say('renderer', device);
+    say('vendor', vendor);
+    say('accel', software ? 'SOFTWARE (no GPU!)' : 'hardware');
+    say('screen', `${window.innerWidth}x${window.innerHeight} @dpr ${window.devicePixelRatio || 1}`);
+    say('scene', `${this.renderer.info.render.calls} draws, ${(this.renderer.info.render.triangles / 1000).toFixed(0)}k tris`);
+
+    const wasPinned = this._pinned, wasTier = this.tier, wasReduced = this.reduced;
+    this._pinned = true;
+
+    for (let i = QUALITY.length - 1; i >= 0; i--) {
+      this.tier = i;
+      this.reduced = false;                     // measure the ride, not the fallback
+      this.applyTier();
+      this.reduced = false;
+      const gaps = await this._spin(1200);
+      if (!gaps.length) { say(QUALITY[i].name, 'not measured'); continue; }
+      gaps.sort((a, b) => a - b);
+      const med = gaps[gaps.length >> 1];
+      const p95 = gaps[Math.min(gaps.length - 1, Math.floor(gaps.length * 0.95))];
+      say(QUALITY[i].name, `${(1000 / med).toFixed(0)} fps  (median ${med.toFixed(1)}ms, worst ${p95.toFixed(1)}ms)`);
+    }
+
+    this.tier = wasTier; this.reduced = wasReduced; this._pinned = wasPinned;
+    this.applyTier();
+
+    const text = lines.join('\n');
+    window.__diagText = text;
+    console.log('%c[tea house diagnostic]\n' + text, 'font-family:monospace');
+    if (this.statsEl) {
+      this.statsEl.style.display = 'block';
+      this.statsEl.textContent = text + '\n\n(copy this and send it over)';
+    }
+    return text;
+  }
+
+  // spin the camera along the real curve for `ms`, returning the frame gaps
+  _spin(ms) {
+    return new Promise((resolve) => {
+      const gaps = [];
+      const t0 = performance.now();
+      let last = t0;
+      // rAF is paused in a hidden tab; do not hang the report waiting for it
+      // if rAF never fires (hidden tab) give up fast rather than stalling the report
+      let started = false;
+      const bail = setTimeout(() => { if (!started) resolve(gaps); }, 600);
+      const hard = setTimeout(() => resolve(gaps), ms + 1500);
+      const step = () => {
+        started = true;
+        const now = performance.now();
+        const u = ((now - t0) / 2500) % 1;
+        this.posCurve.getPoint(u, this._p);
+        this.tgtCurve.getPoint(u, this._q);
+        this.camera.position.copy(this._p);
+        this.camera.lookAt(this._q);
+        this.camera.updateProjectionMatrix();
+        if (this.petalCount > 0) this.updatePetals(now / 1000);
+        this.renderer.render(this.scene, this.camera);
+        if (now - t0 > 250) gaps.push(now - last);   // ignore the warm-up frames
+        last = now;
+        if (now - t0 < ms) requestAnimationFrame(step);
+        else { clearTimeout(bail); clearTimeout(hard); resolve(gaps); }
+      };
+      requestAnimationFrame(step);
+    });
   }
 
   // the whole look is one number: 0 = midday, 1 = night. Everything reads off it.
@@ -833,6 +944,9 @@ export class HomeScene {
     this.buildWorld();
     this.buildCurves();
     this.applyTier();
+    if (new URLSearchParams(location.search).has('diag')) {
+      setTimeout(() => this.runDiagnostic(), 600);   // let the first frames settle
+    }
     this.mode = 'idle'; this.stopIdx = 0; this.nudge = 0;
     this.onResize = () => this.resize();
     window.addEventListener('resize', this.onResize);
@@ -923,6 +1037,7 @@ export class HomeScene {
   }
 
   resize() {
+    if (this._cardTops) this.measureCards();
     if (!this.renderer) return;
     const w = window.innerWidth, h = window.innerHeight;
     this.renderer.setPixelRatio(this.pixelRatio());
@@ -2078,14 +2193,16 @@ export class HomeScene {
 
     if (this.reduced) {
       // static composed frame per section; the page scrolls normally
+      if (!this._cardTops) this.measureCards();
       const y = window.scrollY;
       let best = 0, dist = Infinity;
-      this.cards.forEach((c, i) => {
-        const d = Math.abs(y - (c.el.getBoundingClientRect().top + y));
+      for (let i = 0; i < this._cardTops.length; i++) {
+        const d = Math.abs(y - this._cardTops[i]);
         if (d < dist) { dist = d; best = i; }
-      });
+      }
       this.stopIdx = best;
       progress = this.cards[best].wp;
+      // cardState short-circuits when nothing changed, so this is free once settled
       this.cards.forEach(c => this.cardState(c.el, 1, 0, 0));
     } else if (this.mode === 'auto') {
       const a = this.auto;
